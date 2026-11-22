@@ -1,0 +1,15 @@
+# Tarea de una vez: probar las alarmas en esta compu
+
+Para qué sirve: comprobar, la primera vez que se corre el arranque en una compu, que las alarmas automáticas del cerebro (`sistema/alarmas/`) funcionan en ella. La llama el paso 1 de la fase `aviso` de `sistema/rutinas/arranque.md`. En cuanto funcionan, este archivo se borra y no vuelve a correr. Se hace en silencio, antes del aviso, y solo dentro de esta carpeta; al dueño se le cuenta en el cierre del arranque, en una línea y en palabras llanas, solo si algo falló.
+
+Qué alarmas son: una frena que se escriba en una nota una tarjeta, una CLABE, una CURP, un RFC de persona, una contraseña o una llave de programa; otra frena que se escriba fuera de esta carpeta; otra frena sacar claves de 1Password por la consola; otra, al terminar cada turno, revisa que no queden archivos en `entrada/_paso/` y que la respuesta traiga «Guardé:» si cambió algo. Viven en `.claude/settings.json` (solo Claude Code; Codex no las corre, ahí queda la regla de AGENTS.md).
+
+## Pasos
+
+1. **Mira qué compu es.** Corre en la consola `uname -s`. Si sale algo con `MINGW`, `MSYS` o `CYGWIN`, o la consola es PowerShell, es Windows. `Darwin` es Mac; `Linux` es Linux.
+2. **Si es Windows: no pruebes nada. Borra este archivo y termina.** En Windows ya se probaron el 2026-11-19 y el 2026-11-20 (40 de 40 pruebas y varias en vivo). Apunta en `sistema/bitacora.md`: `- AAAA-MM-DD · alarmas: Windows, ya probadas; borré la tarea de probarlas · guardé: nada · pendiente: nada`. Si más adelante una alarma avisa que `sh` no se reconoce, esa compu no tiene Git Bash: díselo al dueño en una línea («las alarmas no corren en esta compu; las reglas siguen valiendo») y apúntalo en `pendientes` del estado.
+3. **Si es Mac o Linux, corre la prueba:** `sh sistema/alarmas/probar.sh`. Debe terminar con «TODAS BIEN». La prueba escribe en `entrada/_paso/prueba-alarmas/` y lo borra al final.
+4. **Prueba en vivo, con la herramienta de escribir de la app**, dos veces: (a) escribe en `entrada/_paso/prueba-en-vivo.md` el texto `Pago con` seguido de los números 4111, 1111, 1111 y 1111 separados por espacios; la app debe negarlo con «Alarma del cerebro». (b) Escribe `hola` en un archivo de la carpeta temporal del sistema; también debe negarlo. Si alguna de las dos pasa, la alarma no corrió: borra el archivo que haya quedado.
+5. **Si todo salió bien:** borra este archivo y apunta en `sistema/bitacora.md`: `- AAAA-MM-DD · alarmas probadas en <Mac o Linux>: todas bien; borré la tarea · guardé: nada · pendiente: nada`.
+6. **Si algo falló:** no borres este archivo (la siguiente sesión lo vuelve a intentar) ni toques las alarmas. Apunta en `pendientes` de `sistema/estado.md`: `alarmas: fallaron en <sistema> el AAAA-MM-DD · <qué prueba falló, copiada de la salida>`, y en el cierre del arranque díselo al dueño en una línea, sin palabras técnicas: «Las alarmas que cuidan tus claves no funcionaron bien en esta compu; las reglas siguen valiendo y quien te instaló el cerebro puede revisarlo».
+7. Antes de seguir con el aviso, comprueba que `entrada/_paso/` quedó vacía.

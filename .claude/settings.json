@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "deny": [
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/*.env)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Read(**/*contrase*)",
+      "Read(**/*Contrase*)",
+      "Read(**/*CONTRASE*)",
+      "Read(**/*claves*)",
+      "Read(**/*Claves*)",
+      "Read(**/*CLAVES*)",
+      "Read(**/*credencial*)",
+      "Read(**/*Credencial*)",
+      "Read(**/*CREDENCIAL*)",
+      "Read(**/*credential*)",
+      "Read(**/*Credential*)",
+      "Read(**/*CREDENTIAL*)",
+      "Read(**/*password*)",
+      "Read(**/*Password*)",
+      "Read(**/*PASSWORD*)",
+      "Read(~/**/.env)",
+      "Read(~/**/.env.*)",
+      "Read(~/**/*.env)",
+      "Read(~/**/*.pem)",
+      "Read(~/**/*.key)",
+      "Read(~/**/*contrase*)",
+      "Read(~/**/*Contrase*)",
+      "Read(~/**/*CONTRASE*)",
+      "Read(~/**/*claves*)",
+      "Read(~/**/*Claves*)",
+      "Read(~/**/*CLAVES*)",
+      "Read(~/**/*credencial*)",
+      "Read(~/**/*Credencial*)",
+      "Read(~/**/*CREDENCIAL*)",
+      "Read(~/**/*credential*)",
+      "Read(~/**/*Credential*)",
+      "Read(~/**/*CREDENTIAL*)",
+      "Read(~/**/*password*)",
+      "Read(~/**/*Password*)",
+      "Read(~/**/*PASSWORD*)",
+      "Read(**/*.p12)",
+      "Read(**/*.pfx)",
+      "Read(**/*.ppk)",
+      "Read(**/*.kdbx)",
+      "Read(**/*.1pux)",
+      "Read(**/id_rsa*)",
+      "Read(**/*token*)",
+      "Read(**/*Token*)",
+      "Read(**/*TOKEN*)",
+      "Read(**/*secret*)",
+      "Read(**/*Secret*)",
+      "Read(**/*SECRET*)",
+      "Read(**/*llave*)",
+      "Read(**/*Llave*)",
+      "Read(**/*LLAVE*)",
+      "Read(**/*llaves*)",
+      "Read(**/*Llaves*)",
+      "Read(**/*LLAVES*)",
+      "Read(~/**/*.p12)",
+      "Read(~/**/*.pfx)",
+      "Read(~/**/*.ppk)",
+      "Read(~/**/*.kdbx)",
+      "Read(~/**/*.1pux)",
+      "Read(~/**/id_rsa*)",
+      "Read(~/**/*token*)",
+      "Read(~/**/*Token*)",
+      "Read(~/**/*TOKEN*)",
+      "Read(~/**/*secret*)",
+      "Read(~/**/*Secret*)",
+      "Read(~/**/*SECRET*)",
+      "Read(~/**/*llave*)",
+      "Read(~/**/*Llave*)",
+      "Read(~/**/*LLAVE*)",
+      "Read(~/**/*llaves*)",
+      "Read(~/**/*Llaves*)",
+      "Read(~/**/*LLAVES*)",
+      "Read(**/sistema/accesos/.caja*)",
+      "Edit(**/sistema/accesos/.caja*)",
+      "Read(~/.claude/projects/**)",
+      "Read(~/.codex/sessions/**)"
+    ],
+    "ask": [
+      "Edit(/AGENTS.md)",
+      "Edit(/CLAUDE.md)",
+      "Edit(/sistema/rutinas/**)",
+      "Edit(/.claude/**)",
+      "Edit(/.agents/**)",
+      "Edit(/.codex/**)"
+    ]
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"Recordatorio del cerebro: al dueno escribele como el escribe, con sus palabras, su largo y ejemplos sencillos de la vida diaria, sin terminos tecnicos (conocimiento/dueno/como-hablarle.md). Esa nota la afina sola una alarma con cada tanda de mensajes suyos: no la apuntes tu en cada mensaje; solo si el la corrige con palabras, y entonces con marca [confirmado]. Imita tambien como piensa y explica (seccion Como piensa y explica). A subagentes, normal y tecnico.\"",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "sh \"$CLAUDE_PROJECT_DIR/sistema/alarmas/al-recibir.sh\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"$CLAUDE_PROJECT_DIR/sistema/alarmas/antes-de-escribir.sh\"",
+            "timeout": 15
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"$CLAUDE_PROJECT_DIR/sistema/alarmas/antes-de-la-consola.sh\"",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"$CLAUDE_PROJECT_DIR/sistema/alarmas/al-terminar.sh\"",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}

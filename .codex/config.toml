@@ -1,0 +1,5 @@
+# Configuración de Codex para este cerebro. Codex la usa solo si confías en la carpeta.
+# Escribe solo dentro de esta carpeta y pide permiso para lo demás.
+# No va aquí nada más: las reglas viven en AGENTS.md (ver LEEME.md, «Codex»).
+sandbox_mode = "workspace-write"
+approval_policy = "on-request"

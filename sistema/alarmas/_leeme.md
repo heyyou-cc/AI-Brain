@@ -1,0 +1,12 @@
+# Alarmas del cerebro
+
+Para qué sirven: hacen que tres reglas de AGENTS.md se cumplan solas en Claude Code, aunque el asistente tenga prisa o se le olviden. Las enciende `.claude/settings.json`; Codex no las corre y ahí siguen valiendo las reglas escritas. No necesitan instalar nada: corren con `sh`, que traen Mac, Linux y Windows con Git Bash.
+
+- `antes-de-escribir.sh`: antes de cada escritura de la app, frena dos cosas: escribir fuera de esta carpeta (o subir de carpeta) y escribir una tarjeta, una CLABE, una CURP, un RFC de persona, una contraseña o una llave de programa (AGENTS.md, punto 5). Solo revisa el texto nuevo, así que sí deja quitar un número que ya estaba. No ve lo que se escribe con comandos de la consola.
+- `antes-de-la-consola.sh`: antes de cada comando de la consola (Bash o PowerShell), frena usar 1Password directo en vez del mesero, leer o imprimir la llave de servicio o su caja, abrir los llaveros del sistema, descifrar claves a mano y volcar todas las variables del sistema (`sistema/accesos/_leeme.md`). Deja pasar el mesero y la ventanita. Cuida de descuidos, no de mala fe.
+- `al-recibir.sh`: con cada mensaje del dueño deja una marca de la hora en `.ultima-orden`; además guarda el mensaje del dueño, cada tanto lanza `destilar-voz.sh` para afinar cómo hablarle, y le pasa al asistente la voz vigente (ver `sistema/estilo/_leeme.md`).
+- `destilar-voz.sh`: afina `conocimiento/dueno/como-hablarle.md` en segundo plano con la cuenta de Claude del dueño; nunca quita lo confirmado y, si falla, deja la nota como estaba.
+- `al-terminar.sh`: cuando el asistente va a terminar su turno, revisa que no queden archivos en `entrada/_paso/` (punto 5) y que, si cambió algo del cerebro desde esa marca, la respuesta traiga «Guardé:» (punto 3); no cuenta lo que afina solo el ayudante de la voz. Lo frena una sola vez; la segunda lo deja ir.
+- `probar.sh`: prueba todas sin tocar nada del dueño. Desde la carpeta del cerebro: `sh sistema/alarmas/probar.sh`. Debe decir «TODAS BIEN».
+
+La primera vez que se corre el arranque en una compu, `sistema/tareas/probar-alarmas.md` las prueba y luego se borra sola. Probadas en Windows (Git Bash) el 2026-11-19: 23 de 23, más dos pruebas en vivo; con la de la consola, el 2026-11-20: 40 de 40, y en vivo frenó 1Password directo en Bash y el volcado de variables en PowerShell, y dejó pasar el mesero. En Mac y Linux no se han corrido.
