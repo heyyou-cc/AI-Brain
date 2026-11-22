@@ -1,0 +1,71 @@
+# Archivos que nunca se suben a GitHub: claves, contraseñas y originales sin revisar.
+# Va en línea con sistema/clasificacion.md y con la lista de bloqueos de .claude/settings.json.
+
+# --- La caja de esta compu (llave de servicio de 1Password, cifrada) ---
+sistema/accesos/.caja*
+
+# --- Archivos de claves ---
+.env
+.env.*
+*.env
+*.pem
+*.key
+*.p12
+*.pfx
+*.ppk
+*.kdbx
+*.1pux
+id_rsa*
+id_ed25519*
+*.cer
+*.sat
+
+# --- Exportes de gestores de contraseñas ---
+passwords*.csv
+*Chrome Passwords*
+*bitwarden_export*
+*1password*export*
+
+# --- Cualquier nombre que hable de claves ---
+*[Cc]ontrase*
+*CONTRASE*
+*[Pp]assword*
+*PASSWORD*
+*[Cc]laves*
+*CLAVES*
+*[Cc]redencial*
+*CREDENCIAL*
+*[Cc]redential*
+*CREDENTIAL*
+*[Tt]oken*
+*TOKEN*
+*[Ss]ecret*
+*SECRET*
+*[Ll]lave*
+*LLAVE*
+*e.firma*
+*efirma*
+
+# --- Archivos de paso del agente (CSV de un Excel, el archivo de referencias del mesero, etc.) ---
+entrada/_paso/
+entrada/conversaciones/
+
+# --- Lo que el dueño suelta sin revisar, y los originales ya leídos ---
+# El conocimiento ya ordenado (conocimiento/) sí se sube; los documentos crudos se quedan en la compu.
+entrada/*
+!entrada/_leeme.md
+!entrada/por-clasificar/
+entrada/por-clasificar/*
+!entrada/por-clasificar/_leeme.md
+fuentes/*
+!fuentes/_registro.md
+
+# --- Ajustes locales de cada compu ---
+.claude/settings.local.json
+.codex/*.local.*
+
+# --- Basura del sistema ---
+.DS_Store
+Thumbs.db
+desktop.ini
+~$*
