@@ -8,6 +8,10 @@ Tres reglas que no se rompen en ningún paso:
 - **Nunca pidas una contraseña, un código ni un token por el chat.** Si hace falta entrar a GitHub, el dueño lo hace en la ventana de su navegador o en la que abra git; tú no ves nada de eso. Si los pega en el chat, no los uses, dile que no hacía falta y que lo cambie en GitHub.
 - **Crear una cuenta, un repositorio o conectar una cuenta pide su «sí» antes**, en ese turno. Tú no creas cuentas ni pagas nada.
 
+## Antes de todo · ¿ya quedó conectada?
+
+Compara `git remote get-url origin` con el renglón `remoto_permitido=` de `sistema/sincronizar.conf`, sin el usuario que vaya antes de `github.com`, sin `.git` al final y sin distinguir mayúsculas. Si coinciden y `GIT_TERMINAL_PROMPT=0 git ls-remote origin` entra sin pedir nada, la carpeta ya está conectada (por ejemplo, con el comando del wizard de heyyou): haz lo de «Al terminar» y borra este archivo sin preguntarle nada al dueño y sin seguir con las partes de abajo.
+
 ## Parte 1 · Preparar la carpeta (sin preguntar)
 
 1. Si `CEREBRO_SINCRONIZAR=0` está puesta en esta compu (en `.claude/settings.local.json` o en las variables del sistema), la sincronización está apagada a propósito: no sigas, apunta en `pendientes` `Respaldo: apagado en esta compu (CEREBRO_SINCRONIZAR=0)` y no borres esta tarea.
@@ -19,6 +23,8 @@ Tres reglas que no se rompen en ningún paso:
 ## Parte 2 · El repositorio del dueño (necesita al dueño, una vez)
 
 Si el dueño ya se fue, déjala para otra sesión; apúntalo en `pendientes`: `Respaldo: falta conectarlo (sistema/tareas/conectar-respaldo.md, parte 2)`.
+
+Primero: **si heyyou le dio un enlace del wizard** (su página del taller), que lo conecte desde ahí. Dile que en el paso «GitHub» de esa página elija o cree su copia privada, apriete «Dame el comando» y lo pegue en la terminal, no en el asistente: ese comando conecta la carpeta y hace la primera subida. No crees otro repositorio. Cuando termine, revisa otra vez «Antes de todo». Solo si no tiene ese enlace, sigue con el paso 1.
 
 1. Pregúntale una sola cosa: si heyyou ya le dio la dirección de su respaldo, o si quiere que lo cree en su cuenta de GitHub. Si no tiene cuenta, dile que la abra en github.com (es gratis) y que te avise.
 2. **Si heyyou se lo dio ya creado:** pídele la dirección (por ejemplo `https://github.com/su-cuenta/su-cerebro.git`). Comprueba que es privado: con `gh repo view <cuenta>/<nombre> --json visibility` debe decir `PRIVATE`; si no tienes `gh`, pídele a heyyou que lo confirme. Si es público o no se puede saber, no sigas.
