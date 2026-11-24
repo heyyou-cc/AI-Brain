@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "type": "command",
+        "bash": "CEREBRO_AGENTE=copilot sh sistema/alarmas/sincronizar.sh bajar",
+        "powershell": "powershell -NoProfile -ExecutionPolicy Bypass -File sistema/alarmas/correr.ps1 -Agente copilot sincronizar.sh bajar",
+        "cwd": ".",
+        "timeoutSec": 60
+      }
+    ],
+    "userPromptSubmitted": [
+      {
+        "type": "command",
+        "bash": "CEREBRO_AGENTE=copilot sh sistema/alarmas/al-recibir.sh",
+        "powershell": "powershell -NoProfile -ExecutionPolicy Bypass -File sistema/alarmas/correr.ps1 -Agente copilot al-recibir.sh",
+        "cwd": ".",
+        "timeoutSec": 10
+      },
+      {
+        "type": "command",
+        "bash": "CEREBRO_AGENTE=copilot sh sistema/alarmas/sincronizar.sh bajar",
+        "powershell": "powershell -NoProfile -ExecutionPolicy Bypass -File sistema/alarmas/correr.ps1 -Agente copilot sincronizar.sh bajar",
+        "cwd": ".",
+        "timeoutSec": 25
+      }
+    ],
+    "preToolUse": [
+      {
+        "type": "command",
+        "bash": "CEREBRO_AGENTE=copilot sh sistema/alarmas/antes-de-escribir.sh",
+        "powershell": "powershell -NoProfile -ExecutionPolicy Bypass -File sistema/alarmas/correr.ps1 -Agente copilot antes-de-escribir.sh",
+        "cwd": ".",
+        "timeoutSec": 15
+      },
+      {
+        "type": "command",
+        "bash": "CEREBRO_AGENTE=copilot sh sistema/alarmas/antes-de-la-consola.sh",
+        "powershell": "powershell -NoProfile -ExecutionPolicy Bypass -File sistema/alarmas/correr.ps1 -Agente copilot antes-de-la-consola.sh",
+        "cwd": ".",
+        "timeoutSec": 15
+      },
+      {
+        "type": "command",
+        "bash": "CEREBRO_AGENTE=copilot sh sistema/alarmas/antes-de-leer.sh",
+        "powershell": "powershell -NoProfile -ExecutionPolicy Bypass -File sistema/alarmas/correr.ps1 -Agente copilot antes-de-leer.sh",
+        "cwd": ".",
+        "timeoutSec": 15
+      }
+    ],
+    "postToolUse": [
+      {
+        "type": "command",
+        "bash": "CEREBRO_AGENTE=copilot sh sistema/alarmas/sincronizar.sh subir",
+        "powershell": "powershell -NoProfile -ExecutionPolicy Bypass -File sistema/alarmas/correr.ps1 -Agente copilot sincronizar.sh subir",
+        "cwd": ".",
+        "timeoutSec": 60
+      }
+    ],
+    "agentStop": [
+      {
+        "type": "command",
+        "bash": "CEREBRO_AGENTE=copilot sh sistema/alarmas/al-terminar.sh",
+        "powershell": "powershell -NoProfile -ExecutionPolicy Bypass -File sistema/alarmas/correr.ps1 -Agente copilot al-terminar.sh",
+        "cwd": ".",
+        "timeoutSec": 15
+      },
+      {
+        "type": "command",
+        "bash": "CEREBRO_AGENTE=copilot sh sistema/alarmas/sincronizar.sh subir ya",
+        "powershell": "powershell -NoProfile -ExecutionPolicy Bypass -File sistema/alarmas/correr.ps1 -Agente copilot sincronizar.sh subir ya",
+        "cwd": ".",
+        "timeoutSec": 90
+      }
+    ]
+  }
+}

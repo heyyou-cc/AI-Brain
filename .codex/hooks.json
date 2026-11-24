@@ -1,0 +1,100 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "r=$(git rev-parse --show-toplevel 2>/dev/null || pwd); CEREBRO_AGENTE=codex sh \"$r/sistema/alarmas/sincronizar.sh\" bajar",
+            "commandWindows": "powershell -NoProfile -ExecutionPolicy Bypass -File sistema/alarmas/correr.ps1 -Agente codex sincronizar.sh bajar",
+            "timeout": 60
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "r=$(git rev-parse --show-toplevel 2>/dev/null || pwd); CEREBRO_AGENTE=codex sh \"$r/sistema/alarmas/al-recibir.sh\"",
+            "commandWindows": "powershell -NoProfile -ExecutionPolicy Bypass -File sistema/alarmas/correr.ps1 -Agente codex al-recibir.sh",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "r=$(git rev-parse --show-toplevel 2>/dev/null || pwd); CEREBRO_AGENTE=codex sh \"$r/sistema/alarmas/sincronizar.sh\" bajar",
+            "commandWindows": "powershell -NoProfile -ExecutionPolicy Bypass -File sistema/alarmas/correr.ps1 -Agente codex sincronizar.sh bajar",
+            "timeout": 25
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "apply_patch|Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "r=$(git rev-parse --show-toplevel 2>/dev/null || pwd); CEREBRO_AGENTE=codex sh \"$r/sistema/alarmas/antes-de-escribir.sh\"",
+            "commandWindows": "powershell -NoProfile -ExecutionPolicy Bypass -File sistema/alarmas/correr.ps1 -Agente codex antes-de-escribir.sh",
+            "timeout": 15
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "r=$(git rev-parse --show-toplevel 2>/dev/null || pwd); CEREBRO_AGENTE=codex sh \"$r/sistema/alarmas/antes-de-la-consola.sh\"",
+            "commandWindows": "powershell -NoProfile -ExecutionPolicy Bypass -File sistema/alarmas/correr.ps1 -Agente codex antes-de-la-consola.sh",
+            "timeout": 15
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|mcp__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "r=$(git rev-parse --show-toplevel 2>/dev/null || pwd); CEREBRO_AGENTE=codex sh \"$r/sistema/alarmas/antes-de-leer.sh\"",
+            "commandWindows": "powershell -NoProfile -ExecutionPolicy Bypass -File sistema/alarmas/correr.ps1 -Agente codex antes-de-leer.sh",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "apply_patch|Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "r=$(git rev-parse --show-toplevel 2>/dev/null || pwd); CEREBRO_AGENTE=codex sh \"$r/sistema/alarmas/sincronizar.sh\" subir",
+            "commandWindows": "powershell -NoProfile -ExecutionPolicy Bypass -File sistema/alarmas/correr.ps1 -Agente codex sincronizar.sh subir",
+            "timeout": 60
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "r=$(git rev-parse --show-toplevel 2>/dev/null || pwd); CEREBRO_AGENTE=codex sh \"$r/sistema/alarmas/al-terminar.sh\"",
+            "commandWindows": "powershell -NoProfile -ExecutionPolicy Bypass -File sistema/alarmas/correr.ps1 -Agente codex al-terminar.sh",
+            "timeout": 15
+          },
+          {
+            "type": "command",
+            "command": "r=$(git rev-parse --show-toplevel 2>/dev/null || pwd); CEREBRO_AGENTE=codex sh \"$r/sistema/alarmas/sincronizar.sh\" subir ya",
+            "commandWindows": "powershell -NoProfile -ExecutionPolicy Bypass -File sistema/alarmas/correr.ps1 -Agente codex sincronizar.sh subir ya",
+            "timeout": 90
+          }
+        ]
+      }
+    ]
+  }
+}

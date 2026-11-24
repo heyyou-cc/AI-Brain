@@ -1,17 +1,18 @@
 #!/bin/sh
-# Alarma al terminar (Claude Code, Stop). Antes de que el asistente dé su turno por terminado revisa:
+# Alarma al terminar (Stop en Claude Code y Codex; agentStop en Copilot, donde solo avisa). Antes de que el asistente dé su turno por terminado revisa:
 # 1. que no queden archivos de paso en entrada/_paso/ (AGENTS.md, punto 5);
 # 2. que, si cambió algo del cerebro en este turno, su respuesta traiga la línea «Guardé:» (AGENTS.md, punto 3).
 # Si algo falta, lo frena una sola vez y le dice qué arreglar; la segunda vez lo deja ir.
 # Corre con sh en Mac, Linux y Windows con Git Bash. No necesita instalar nada.
 
-entrada=$(cat)
+. "$(dirname "$0")/_leer-evento.sh"
+ev_leer
 
-case "$entrada" in
+case "$EV_JSON" in
   *'"stop_hook_active":true'*|*'"stop_hook_active": true'*) exit 0 ;;
 esac
 
-dir="${CLAUDE_PROJECT_DIR:-$(pwd)}"
+dir="$EV_RAIZ"
 cd "$dir" 2>/dev/null || exit 0
 
 quejas=""
@@ -25,7 +26,7 @@ fi
 marca=sistema/alarmas/.ultima-orden
 if [ -f "$marca" ]; then
   # Lo que afina solo el ayudante de la voz (destilar-voz.sh) no cuenta: el asistente no lo tocó.
-  cambiados=$(find conocimiento sistema empleados trabajo fuentes -type f -newer "$marca" 2>/dev/null | grep -v -e '^sistema/alarmas/' -e '^sistema/estilo/')
+  cambiados=$(find conocimiento sistema skills repositorios trabajo fuentes -type f -newer "$marca" 2>/dev/null | grep -v -e '^sistema/alarmas/' -e '^sistema/estilo/')
   if [ -f sistema/estilo/.ultimo-destilado ] && [ ! conocimiento/dueno/como-hablarle.md -nt sistema/estilo/.ultimo-destilado ]; then
     cambiados=$(printf '%s\n' "$cambiados" | grep -v '^conocimiento/dueno/como-hablarle.md$')
   fi
@@ -35,16 +36,9 @@ if [ -f "$marca" ]; then
   fi
   cambiados=$(printf '%s\n' "$cambiados" | grep -v '^$' | head -n 3)
   if [ -n "$cambiados" ]; then
-    ultimo=$(printf '%s\n' "$entrada" | awk '{
-      s = $0
-      if (match(s, /"last_assistant_message"[ \t]*:[ \t]*"/)) {
-        s = substr(s, RSTART + RLENGTH); i = 1; n = length(s)
-        while (i <= n) { c = substr(s, i, 1); if (c == "\\") { i += 2; continue }; if (c == "\"") break; i++ }
-        print substr(s, 1, i - 1)
-      }
-    }')
+    ultimo=$(ev_cadena last_assistant_message lastAssistantMessage)
     if [ -z "$ultimo" ]; then
-      transcrito=$(printf '%s' "$entrada" | sed -n 's/.*"transcript_path"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n 1 | sed 's#\\\\#/#g')
+      transcrito=$(ev_cadena transcript_path transcriptPath | sed 's#\\\\#/#g')
       if [ -n "$transcrito" ] && [ -f "$transcrito" ]; then
         ultimo=$(tail -n 400 "$transcrito" | grep '"role":"assistant"' | grep '"type":"text"' | tail -n 1)
       fi

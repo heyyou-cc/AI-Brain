@@ -1,0 +1,15 @@
+{
+  "name": "agents-motor-heyyou-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Agents Motor by Heyyou: MCP del hub heyyou para configurar y publicar los agentes de agent-master desde Claude.",
+  "type": "module",
+  "main": "server.mjs",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^3.25.76"
+  }
+}

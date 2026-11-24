@@ -1,5 +1,5 @@
 #!/bin/sh
-# Alarma de sincronizar (Claude Code: SessionStart, UserPromptSubmit, PostToolUse y Stop).
+# Alarma de sincronizar (SessionStart, UserPromptSubmit, PostToolUse y Stop en Claude Code y Codex; los mismos eventos en Copilot).
 # Mantiene esta carpeta igual que su copia en línea (git), aunque otro asistente la cambie a la vez.
 #   bajar        guarda lo de esta compu en un commit y junta lo que haya en línea (merge, nunca rebase).
 #   subir        guarda, junta y sube. Si la última subida fue hace menos de 20 s, solo marca pendiente.
@@ -11,6 +11,9 @@
 # Solo sube y baja si origin es el repositorio que dice sistema/sincronizar.conf (remoto_permitido=).
 # Si origin es la plantilla de HeyYou (o no hay origin ni dirección), no toca nada: ni commit.
 # Archivos de más de ~100 MB no entran al respaldo (GitHub no los acepta): quedan en .git/info/exclude.
+# Nada de una carpeta _privado (con cualquier mayúscula) sube, salvo su _leeme.md: antes de cada commit se saca
+# del índice lo que ya estuviera seguido o llegara con git mv (git rm --cached; el archivo sigue en el disco).
+# Si el arranque ya empezó y pregunta_privado (sistema/estado.md) está vacío o «pendiente», no hace nada (ni commit).
 # Sin red o sin acceso, sale callada y lo apunta en sincronizar.log.
 # Para apagarla en una compu: variable CEREBRO_SINCRONIZAR=0.
 # Corre con sh en Mac, Linux y Windows con Git Bash. No necesita instalar nada.
@@ -22,7 +25,8 @@ bloquea=""
 [ -t 0 ] || entrada=$(cat)
 [ "$CEREBRO_SINCRONIZAR" = "0" ] && exit 0
 
-dir="${CLAUDE_PROJECT_DIR:-$(cd "$(dirname "$0")/../.." && pwd)}"
+dir="$CLAUDE_PROJECT_DIR"
+[ -d "$dir/sistema" ] || dir=$(cd "$(dirname "$0")/../.." 2>/dev/null && pwd)
 cd "$dir" 2>/dev/null || exit 0
 mkdir -p "$dir/sistema/alarmas" 2>/dev/null
 command -v git > /dev/null 2>&1 || exit 0
@@ -36,8 +40,28 @@ gd=$(git rev-parse --absolute-git-dir 2>/dev/null) || exit 0
 
 campo() { printf '%s' "$entrada" | tr -d '\r\n' | sed -n "s/.*\"$1\"[[:space:]]*:[[:space:]]*\"\\([^\"]*\\)\".*/\\1/p" | head -n 1; }
 evento=$(campo hook_event_name)
-sesion=$(campo session_id | tr -cd 'A-Za-z0-9-' | cut -c1-60)
+# Copilot con eventos en camelCase (sessionStart, postToolUse, agentStop...) no manda hook_event_name:
+# se deduce de cómo lo llama .github/hooks/cerebro.json. Por su documentación, solo sessionStart y postToolUse
+# toman "additionalContext", agentStop acepta "block" con "reason", y lo que sale de userPromptSubmitted se descarta.
+copilot=""
+if [ -z "$evento" ]; then
+  case "$CEREBRO_AGENTE$entrada" in
+    copilot*|*'"toolName"'*|*'"sessionId"'*|*'"toolArgs"'*)
+      copilot=si
+      case "$modo$ya" in
+        subirya) evento=Stop ;;
+        subir) evento=PostToolUse ;;
+        *) case "$entrada" in *'"prompt"'*) evento=PromptCopilot ;; *) evento=SessionStart ;; esac ;;
+      esac ;;
+  esac
+fi
+sesion=$( { campo session_id; campo sessionId; } | head -n 1 | tr -cd 'A-Za-z0-9-' | cut -c1-60)
 [ -z "$sesion" ] && sesion=sin-sesion
+# Copilot avisa después de CADA herramienta (no tiene filtro por nombre): las que solo leen no cambian nada.
+if [ "$modo" = subir ] && [ -z "$ya" ]; then
+  herr=$(campo toolName | tr 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' 'abcdefghijklmnopqrstuvwxyz')
+  case "$herr" in view|grep|glob|rg|task|web_fetch|ask_user) exit 0 ;; esac
+fi
 repetido=no
 case "$entrada" in *'"stop_hook_active":true'*|*'"stop_hook_active": true'*) repetido=si ;; esac
 
@@ -56,8 +80,16 @@ traidos="$dir/sistema/alarmas/.traidos"   # lo que llegó de la otra compu en es
 
 # --- Entregar los avisos al asistente, por el canal de cada evento ---
 json() { printf '%s' "$1" | tr -d '\r' | awk 'BEGIN{ORS=""} {gsub(/\\/,"\\\\"); gsub(/"/,"\\\""); gsub(/\t/," "); if (NR>1) print "\\n"; print}'; }
+voz_copilot="$dir/sistema/estilo/.tmp-copilot"   # lo que al-recibir.sh no pudo entregar en Copilot (descarta lo de userPromptSubmitted)
 entrega() {
   texto="$1"
+  # Copilot descarta la salida de userPromptSubmitted: ahí no se entrega ni se gasta nada; los avisos esperan al siguiente evento.
+  [ "$evento" = PromptCopilot ] && return 0
+  if [ "$copilot" = si ] && [ "$evento" != Stop ] && [ -s "$voz_copilot" ]; then
+    texto="${texto:+$texto
+}$(cat "$voz_copilot")"
+    rm -f "$voz_copilot"
+  fi
   if [ -s "$avisos" ]; then
     if [ "$evento" = Stop ] && [ "$repetido" = si ]; then
       :   # ya lo frenó una vez: el aviso espera al siguiente mensaje
@@ -70,8 +102,11 @@ $texto}"
   fi
   [ -z "$texto" ] && return 0
   case "$evento" in
-    PostToolUse) printf '{"hookSpecificOutput":{"hookEventName":"PostToolUse","additionalContext":"%s"}}\n' "$(json "$texto")" ;;
+    PostToolUse)
+      if [ "$copilot" = si ]; then printf '{"additionalContext":"%s"}\n' "$(json "$texto")"
+      else printf '{"hookSpecificOutput":{"hookEventName":"PostToolUse","additionalContext":"%s"}}\n' "$(json "$texto")"; fi ;;
     Stop) [ "$bloquea" = si ] && printf '{"decision":"block","reason":"%s"}\n' "$(json "$texto")" ;;
+    SessionStart) if [ "$copilot" = si ]; then printf '{"additionalContext":"%s"}\n' "$(json "$texto")"; else printf '%s\n' "$texto"; fi ;;
     *) printf '%s\n' "$texto" ;;
   esac
 }
@@ -105,6 +140,32 @@ aviso_remoto() {
 if [ "$plantilla" = si ]; then   # sin repositorio propio: no se toca nada, solo se avisa una vez por sesión
   [ "$modo" = bajar ] && entrega "$(aviso_remoto)"
   exit 0
+fi
+
+# --- Primero la pregunta de privacidad ---
+# Mientras el arranque va en curso o ya cerró, y el dueño no ha contestado qué va a la carpeta privada
+# (pregunta_privado vacío o «pendiente» en sistema/estado.md), no se guarda en git, ni se sube, ni se baja:
+# un commit con lo sensible subiría después con todo y su historia. Con sin-empezar o sin estado, sigue normal.
+estado_f="$dir/sistema/estado.md"
+if [ "$puede" = si ] && [ -f "$estado_f" ]; then
+  fase_a=$(sed -n 's/^-[[:space:]]*fase_arranque:[[:space:]]*//p' "$estado_f" | tr -d '\r' | sed 's/[[:space:]]*$//' | head -n 1)
+  priv_a=$(sed -n 's/^-[[:space:]]*pregunta_privado:[[:space:]]*//p' "$estado_f" | tr -d '\r' | sed 's/[[:space:]]*$//' | head -n 1)
+  case "$fase_a" in
+    ''|sin-empezar) ;;
+    *) case "$priv_a" in
+         hecha*) ;;
+         *)
+           if [ "$modo" = bajar ]; then
+             marca="$gd/sincronizar-avisado-priv-$sesion"
+             if [ ! -f "$marca" ]; then
+               touch "$marca"
+               apunta "en pausa: falta la pregunta de privacidad (pregunta_privado)"
+               entrega "Sincronización del cerebro: está en pausa (no guarda, no sube ni baja) hasta que el dueño conteste la pregunta de privacidad del cierre del arranque (pregunta_privado en sistema/estado.md; AGENTS.md, punto 1). No la rodees ni subas nada a mano."
+             fi
+           fi
+           exit 0 ;;
+       esac ;;
+  esac
 fi
 
 # --- Candado: una sincronización a la vez en esta compu ---
@@ -163,7 +224,25 @@ EOF
       apunta "archivos grandes fuera del respaldo:$(printf '%s' "$nuevos" | tr '\n' ' ')"
     fi
   fi
+  quita_privadas
   g add -A -- . "$@" > /dev/null 2> "$err"
+}
+
+quita_privadas() { # nada de una carpeta privada va a git (salvo su _leeme.md), aunque ya estuviera seguido o llegara con git mv
+  mkdir -p "$gd/info" 2>/dev/null
+  # Por si el .gitignore de esta compu es de una versión vieja: la misma regla, sin distinguir mayúsculas, en .git/info/exclude.
+  for regla in '**/_[Pp][Rr][Ii][Vv][Aa][Dd][Oo]/*' '!**/_[Pp][Rr][Ii][Vv][Aa][Dd][Oo]/_leeme.md'; do
+    grep -qxF "$regla" "$gd/info/exclude" 2>/dev/null || printf '%s\n' "$regla" >> "$gd/info/exclude"
+  done
+  g ls-files 2>/dev/null | awk '{
+    n = split(tolower($0), a, "/"); k = 0
+    for (i = 1; i < n; i++) if (a[i] == "_privado") k = i
+    if (k && !(k == n - 1 && a[n] == "_leeme.md")) print $0
+  }' | while IFS= read -r f; do
+    [ -z "$f" ] && continue
+    g rm --cached -q --ignore-unmatch -- ":(literal)$f" > /dev/null 2>&1 && apunta "dejé de seguir un archivo de una carpeta privada (sigue en esta compu): $f"
+  done
+  return 0
 }
 
 guarda() {

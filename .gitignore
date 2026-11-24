@@ -83,3 +83,13 @@ sistema/estilo/.avisada-*
 sistema/estilo/.destilando/
 sistema/estilo/.ultimo-destilado
 sistema/estilo/.tmp-*
+
+# --- Carpetas privadas del dueño: cualquier carpeta llamada _privado, a cualquier nivel ---
+# Nada de lo que hay dentro se sube; solo su _leeme.md, para que se sepa qué es.
+# (Se ignora el contenido con /*, no la carpeta, porque git no deja volver a incluir un archivo de una carpeta ignorada.)
+# (Sin distinguir mayúsculas: _Privado y _PRIVADO también quedan fuera.)
+**/_[Pp][Rr][Ii][Vv][Aa][Dd][Oo]/*
+!**/_[Pp][Rr][Ii][Vv][Aa][Dd][Oo]/_leeme.md
+
+# --- Lo que se instala solo, dentro de los servidores MCP del cerebro ---
+sistema/mcp/**/node_modules/

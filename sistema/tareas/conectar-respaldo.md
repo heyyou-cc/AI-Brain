@@ -2,8 +2,9 @@
 
 Para qué sirve: conectar, una sola vez, esta carpeta con un repositorio privado del dueño en GitHub, para que `sistema/alarmas/sincronizar.sh` guarde, suba y baje sus cambios solo, y el cerebro sea el mismo en todas sus compus. Mientras esto no esté hecho, la sincronización no hace nada. La llama la fase `cierre` del arranque y también cualquier sesión en la que el dueño pregunte por el respaldo o use una segunda compu. Cuando todo sale bien, este archivo se borra. Al dueño se le habla en palabras llanas: «el respaldo en línea, una copia privada de tu cerebro en tu cuenta de GitHub que solo tú ves»; nada de «origin», «repo», «push» ni nombres de archivos.
 
-Tres reglas que no se rompen en ningún paso:
+Cuatro reglas que no se rompen en ningún paso:
 
+- **Primero la pregunta de privacidad.** Antes de conectar nada o de subir por primera vez, lee `pregunta_privado` en `sistema/estado.md`. Si está vacía o dice `pendiente`, no sigas: no conectes el repositorio ni corras `sincronizar.sh subir`, apunta en `pendientes` `Respaldo: espera la pregunta de privacidad` y deja esta tarea. Solo con `hecha` (el dueño ya decidió qué va a la carpeta privada, o no había nada) se sigue. Vale igual si el dueño pide el respaldo a media sesión o usa una segunda compu: primero la pregunta, luego el respaldo.
 - **El repositorio es privado, siempre.** Si no puedes comprobar que lo es, no subas nada.
 - **Nunca pidas una contraseña, un código ni un token por el chat.** Si hace falta entrar a GitHub, el dueño lo hace en la ventana de su navegador o en la que abra git; tú no ves nada de eso. Si los pega en el chat, no los uses, dile que no hacía falta y que lo cambie en GitHub.
 - **Crear una cuenta, un repositorio o conectar una cuenta pide su «sí» antes**, en ese turno. Tú no creas cuentas ni pagas nada.
@@ -14,7 +15,7 @@ Tres reglas que no se rompen en ningún paso:
 2. Revisa `git --version`. Si no hay git, apunta en `pendientes` `Respaldo: falta git en esta compu` y díselo al dueño en una línea.
 3. Si la carpeta no tiene `.git`: `git init -b main` (si esa versión de git no acepta `-b`, `git init` y luego `git symbolic-ref HEAD refs/heads/main`).
 4. Mira `git remote get-url origin`. Si apunta a la plantilla de heyyou (`heyyou-cc/AI-Brain`, en cualquier forma), quítalo: `git remote remove origin`. Nunca subas nada a la plantilla, ni para probar.
-5. Revisa que `.gitignore` siga en la carpeta y que `git status --short` no traiga nada de `entrada/`, de `fuentes/` (salvo `_registro.md`) ni archivos de claves. Si trae algo así, no sigas: díselo al dueño en una línea y apúntalo en `pendientes`.
+5. Revisa que `.gitignore` siga en la carpeta y que `git status --short` no traiga nada de `entrada/`, de `fuentes/` (salvo `_registro.md`), de ninguna carpeta `_privado` (con cualquier mayúscula; solo su `_leeme.md` puede salir) ni archivos de claves. Si trae algo así, no sigas: díselo al dueño en una línea y apúntalo en `pendientes`.
 
 ## Parte 2 · El repositorio del dueño (necesita al dueño, una vez)
 

@@ -1,11 +1,15 @@
 #!/bin/sh
-# Alarma antes de escribir (Claude Code, PreToolUse de Write, Edit, MultiEdit y NotebookEdit).
+# Alarma antes de escribir (PreToolUse de Write, Edit, MultiEdit y NotebookEdit en Claude Code;
+# apply_patch en Codex; edit y create en Copilot).
 # Frena dos cosas: escribir fuera de la carpeta del cerebro y escribir claves o numeros sensibles
 # (tarjetas, CLABE, CURP, RFC de persona, contrasenas, llaves de programas). AGENTS.md, punto 5.
 # Corre con sh en Mac, Linux y Windows con Git Bash. No necesita instalar nada.
 # Sale con 2 (frena) y explica por que; con 0 deja pasar.
 
-entrada=$(cat)
+. "$(dirname "$0")/_leer-evento.sh"
+ev_leer
+# Copilot manda aqui todas las herramientas: solo las que escriben archivos se revisan.
+[ -n "$EV_ESCRIBE" ] || exit 0
 
 normaliza() {
   printf '%s' "$1" | sed 's#\\\\#/#g; s#\\#/#g; s#//*#/#g' | tr 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' 'abcdefghijklmnopqrstuvwxyz' | sed 's#^/\([a-z]\)/#\1:/#; s#/$##'
@@ -17,12 +21,14 @@ frena() {
 }
 
 # 1. Que no escriba fuera del cerebro.
-dir=$(normaliza "${CLAUDE_PROJECT_DIR:-$(pwd)}")
-ruta=$(printf '%s' "$entrada" | sed -n 's/.*"file_path"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n 1)
-if [ -z "$ruta" ]; then
-  ruta=$(printf '%s' "$entrada" | sed -n 's/.*"notebook_path"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n 1)
-fi
-if [ -n "$ruta" ]; then
+dir=$(normaliza "$EV_RAIZ")
+salto='
+'
+yo_ifs=$IFS
+IFS=$salto
+set -f
+for ruta in $EV_RUTAS; do
+  IFS=$yo_ifs
   r=$(normaliza "$ruta")
   case "$r" in
     */../*|../*|*/..) frena "la ruta $ruta sube de carpeta. Escribe solo dentro del cerebro; lo de paso va en entrada/_paso/ (AGENTS.md, punto 5)." ;;
@@ -35,10 +41,13 @@ if [ -n "$ruta" ]; then
         *) frena "no se escribe fuera de la carpeta del cerebro ($ruta). Lo de paso va en entrada/_paso/ y se borra al terminar; lo que sirve, a fuentes/ (AGENTS.md, punto 5). No uses la carpeta temporal del sistema." ;;
       esac ;;
   esac
-fi
+  IFS=$salto
+done
+IFS=$yo_ifs
+set +f
 
 # 2. Que no escriba claves ni numeros sensibles. Solo revisa el texto nuevo, no el que se quita.
-hallazgo=$(printf '%s\n' "$entrada" | awk '
+hallazgo=$(printf '%s\n' "$EV_PARA_REVISAR" | awk '
 function luhn(n,   i, d, s, par) {
   s = 0; par = 0
   for (i = length(n); i >= 1; i--) {
@@ -93,7 +102,7 @@ function revisa(t,   s, m, n, v, low) {
 }
 {
   s = $0
-  while (match(s, /"(content|new_string|new_source)"[ \t]*:[ \t]*"/)) {
+  while (match(s, /"(content|new_string|new_source|file_text|new_str|newString|fileText)"[ \t]*:[ \t]*"/)) {
     s = substr(s, RSTART + RLENGTH)
     i = 1; n = length(s)
     while (i <= n) {

@@ -1,6 +1,6 @@
 # Rutina: nuevo-entregable
 
-Si el trabajo se va a repetir o es de un oficio (cotizar, cobrar, comprar, contratar, publicar), no es un entregable: usa crear-empleado.
+Si el trabajo se va a repetir o es de un oficio (cotizar, cobrar, comprar, contratar, publicar), no es un entregable: usa la skill que lo resuelve (`skills/_indice.md`) o `sistema/rutinas/crear-skill.md`.
 
 Para qué sirve: que cada entregable (un reporte, una presentación, una página, una base de datos, un texto largo) quede en su carpeta, con lo necesario para que otra sesión u otro agente lo halle y sepa qué es sin preguntar.
 
@@ -36,7 +36,7 @@ Para qué sirve: que cada entregable (un reporte, una presentación, una página
    - [ ] Nada de «Lo que falta» ni de tus preguntas está ya en `conocimiento/`, en lo que leíste en esta sesión o en lo que contestó en la charla: cotejaste cada renglón.
    - [ ] Cada línea de esta charla con «DNA: sí» en `conocimiento/dueno/correcciones.md` tiene ya su DNA nuevo, sacado en el mismo turno.
    - [ ] Las cifras salen de los datos crudos si los hay, y dicen de dónde salen; la que salió de una suma nombra todo lo que incluye. Si es un análisis, reléelo frase por frase: cada afirmación trae `(<número> · <de dónde>)` o dice qué falta y quién lo tiene.
-   - [ ] Si este puesto o esta pieza tiene correcciones (las «Aprendizajes» de la ficha del empleado, o la versión que ya corrigió), lo abriste al lado y no repites ninguna.
+   - [ ] Si esta skill o esta pieza tiene correcciones (la sección de esa skill en `skills/_aprendizajes.md`, o la versión que ya corrigió), lo abriste al lado y no repites ninguna.
    - [ ] Si va al público: todos los precios y escalones, la voz de la marca, y nada que no esté en `conocimiento/` o que no haya dicho el dueño, ni consecuencias de una regla que su nota no dice.
    - [ ] Si va al público: cotejaste cada dato con su fuente, palabra por palabra, y ninguno dice más que ella (ni lugar, ni fecha, ni alcance que la fuente no trae).
    - [ ] Si va al público: ninguna fecha, vigencia o promoción choca con lo guardado de la web. Busca en `conocimiento/` las notas `[de la web: …]` de lo que anuncias; si la web lo da por suspendido, vencido o cambiado, no va como vigente y se lo dices en la primera línea.

@@ -16,11 +16,11 @@ Casi siempre conviene empezar por la rutina: cuando ya salió bien varias veces,
 - El dueño pregunta qué se podría automatizar: lee `sistema/ideas-para-automatizar.md` y lo que sepas de su semana en `conocimiento/`.
 - En el arranque: lo que pidió tres veces o más va siempre en el mensaje de cierre, como «Sugiero dejar como rutina: …», todo junto en esa línea (`sistema/rutinas/arranque.md`, fase `cierre`). Si ya lo sugeriste al terminar de leer sus conversaciones, en el cierre no se repite.
 
-Primero termina lo que pidió. La sugerencia va cuando el trabajo terminó (si corre una rutina, en su cierre), en una línea, y una a la vez; nunca en el primer mensaje ni en medio de otra rutina, como la de un empleado. La única excepción es la del arranque, que las nombra todas juntas. Si ya dijo que no, no insistas: queda como `descartada`.
+Primero termina lo que pidió. La sugerencia va cuando el trabajo terminó (si corre una rutina, en su cierre), en una línea, y una a la vez; nunca en el primer mensaje ni en medio de otra rutina o de una skill. La única excepción es la del arranque, que las nombra todas juntas. Si ya dijo que no, no insistas: queda como `descartada`.
 
 **Nunca le digas que no contestó**, que algo «quedó sin respuesta» ni «lo que te sugerí» (de usted: «lo que le sugerí») de una sugerencia de rutina. Si dudas de si ya se la mandaste, sugiérela otra vez, como si fuera la primera, y ya.
 
-Si lo que se repite es trabajo de un puesto («cada semana alguien tiene que contestar…»), no es una rutina suelta: es un empleado (AGENTS.md, punto 17, y `sistema/rutinas/crear-empleado.md`).
+Si lo que se repite es trabajo de un oficio («cada semana alguien tiene que contestar…»), no es una rutina suelta: es una skill (AGENTS.md, punto 17, `skills/_indice.md` y `sistema/rutinas/crear-skill.md`).
 
 ## Cómo apuntarla
 

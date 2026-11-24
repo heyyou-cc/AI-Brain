@@ -6,7 +6,7 @@ El DNA es una foto: la verdad sigue en `conocimiento/`. **El DNA nunca suma dato
 
 ## Pasos
 
-1. Lee `conocimiento/_mapa.md` y, con él, las notas de cada carpeta. Lee también `empleados/_indice.md` para la sección 11.
+1. Lee `conocimiento/_mapa.md` y, con él, las notas de cada carpeta. Lee también `skills/_indice.md` para la sección 11. **El DNA nunca incluye lo privado:** no abras ninguna carpeta `_privado` para armarlo; donde una nota diga «(hay datos en privado)», escribe «hay datos en privado» sin el dato; y lo que `datos_en_privado` del estado marque «por decidir» queda fuera hasta que el dueño conteste. Dentro del arranque, el DNA se arma después de la pregunta de privacidad y de mover lo que él diga.
 2. Crea la carpeta con `sistema/rutinas/nuevo-entregable.md`: `trabajo/<AAAA-MM>-dna-del-negocio/`, con el documento `dna-del-negocio.md` y su `leeme.md`. Si ya existe la de este mes, saca una versión nueva (`dna-del-negocio-v2.md`) y apúntala en el `leeme.md`; las de meses pasados no se tocan.
 3. Llena la plantilla de abajo, sección por sección:
    - cada dato lleva, al final de su renglón, la marca que trae de su nota (`[confirmado AAAA-MM-DD]`, `[de documento: …]`, `[de la web: …]`, `[inferido: …]`) y el enlace a la nota de donde sale; el enlace no reemplaza la marca. Así se ve un renglón: `- Atiende de lunes a sábado, de 9 a 7 [de documento: horarios.pdf] · [horario](../../conocimiento/operacion/sucursales.md)`. Si la nota no trae marca, pónsela primero en la nota (lo que contó o confirmó el dueño: `[confirmado AAAA-MM-DD]`, con el día en que lo dijo; lo de un archivo: `[de documento: archivo]`) y luego cópiala aquí; si no sabes de dónde salió, `[inferido: …]`;
@@ -90,8 +90,8 @@ Resumen: …
 6.5 Lo que el dueño no alcanza a ver
 6.6 Lo que hoy no se puede medir
 
-## 7. Las 30 P                                          ← según conocimiento/_mapa.md
-P01 Personas · P02 Procesos · P03 Plataformas · P04 Protocolos · P05 Presupuestos · P06 Publicidad · P07 Proyectos · P08 Prospectos · P09 Productos · P10 Proveedores · P11 Partners · P12 Problemas · P13 Prioridades · P14 Patrones · P15 Predicciones · P16 Performance · P17 Pérdidas · P18 Poder · P19 Propósito · P20 Puestos artificiales · P21 Propiedad intelectual · P22 Posicionamiento · P23 Promesas · P24 Pruebas · P25 Percepción · P26 Productividad · P27 Planeación · P28 Postventa · P29 Permanencia · P30 Potencial
+## 7. Las 31 P                                          ← según conocimiento/_mapa.md
+P01 Personas · P02 Procesos · P03 Plataformas · P04 Protocolos · P05 Presupuestos · P06 Publicidad · P07 Proyectos · P08 Prospectos · P09 Productos · P10 Proveedores · P11 Partners · P12 Problemas del negocio · P13 Prioridades · P14 Patrones · P15 Predicciones · P16 Performance · P17 Pérdidas · P18 Poder · P19 Propósito · P20 Pericias (skills) · P21 Propiedad intelectual · P22 Posicionamiento · P23 Promesas · P24 Pruebas · P25 Percepción · P26 Productividad · P27 Planeación · P28 Postventa · P29 Permanencia · P30 Potencial · P31 Problemas del dueño
 (una parte por P, con sus datos marcados o «pendiente»; la definición de cada P está en sistema/clasificacion.md)
 
 ## 8. Cómo se cotiza                                    ← oferta/
@@ -108,8 +108,8 @@ P01 Personas · P02 Procesos · P03 Plataformas · P04 Protocolos · P05 Presupu
 ## 10. Historias por puesto                              ← equipo/
 (por cada puesto del equipo: qué hace, qué necesita, qué lo atora)
 
-## 11. Puestos artificiales                              ← empleados/_indice.md
-(los que están despiertos, con su estado; los dormidos que más le servirían, marcados [inferido])
+## 11. Pericias (skills)                              ← skills/_indice.md
+(las skills en uso y las que más le servirían, marcadas [inferido]; las de fábrica y las que creó el dueño)
 
 ## 12. Mapa de decisiones                                ← dueno/, rumbo/, sistema/decisiones.md
 (comerciales · operativas · financieras · de equipo · estratégicas: quién decide, con qué información, con qué reglas)
