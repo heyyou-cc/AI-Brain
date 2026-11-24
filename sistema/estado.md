@@ -2,11 +2,11 @@
 
 Para qué sirve: dice en qué va el cerebro para que cualquier sesión siga donde quedó la anterior. El agente lo lee al primer mensaje de cada sesión (AGENTS.md, punto 1) y lo escribe después de cada paso del arranque. La sesión siguiente lo toma como cierto: en cuanto algo cambia (el dueño contesta una duda, una fuente se revisa, un pendiente se resuelve), corrige esa línea en ese momento, no al final. No lo borres.
 
-- version: 1.9
+- version: 1.10
 - carpeta_personal:
 - ultima_sesion:
 - fase_arranque: sin-empezar
-- permiso:
+- permiso: directo
 - carpetas_aprobadas:
 - barrido_inventario:
 - barrido_leidos:
@@ -14,21 +14,29 @@ Para qué sirve: dice en qué va el cerebro para que cualquier sesión siga dond
 - conversaciones: sin-revisar
 - conectores: sin-revisar
 - web: sin-revisar
+- enriquecer:
+- vuelta_extra: 0
+- pistas:
+- tablero:
 - preguntas_hechas: 0
 - entrevista_sin_dato:
 - arranque_cerrado:
 - ultimo_repaso:
 - repaso_desde:
-- estilo_aprende_hasta: 2026-12-19
+- estilo_aprende_hasta:
 
 ## Pendientes
 
-- Probar la ventanita con una persona y un dato inventado, en el cajón de prueba de José (2026-11-20: «Luego»).
+- Nada.
 
 ## Qué significa cada campo
 
-- `fase_arranque`: sin-empezar → aviso → inventario → dudosos → lectura → conversaciones → conectores → web → entrevista → cierre → listo (`sistema/rutinas/arranque.md`).
-- `permiso`: adelante · solo-algunas · no-revisar.
+- `fase_arranque`, por vueltas (`sistema/rutinas/arranque.md`, «Fases»): vuelta 1: sin-empezar → aviso → inventario → dudosos → lectura → conversaciones → tablero-1; vuelta 2: conectores → tablero-2; vuelta 3: web → enriquecer → tablero-3; luego, si salen pistas nuevas, `pistas` (con `vuelta_extra`); cierre: entrevista → cierre → listo.
+- `permiso`: `directo` (el arranque no pide permiso; es el valor de fábrica). Los valores de versiones anteriores siguen valiendo si ya están escritos: `adelante` (igual que `directo`), `solo-algunas` (solo `carpetas_aprobadas`) y `no-revisar` (salta carpetas y conversaciones).
+- `enriquecer`: qué pistas buscó la fase `enriquecer`, qué halló y cuáles no, o `no revisada · por qué: …`.
+- `vuelta_extra`: cuántas vueltas extra por pistas nuevas lleva el arranque (0 al empezar; el tope es tres).
+- `tablero`: cuándo se le enseñó el tablero de las 30 P al cerrar cada vuelta, como `vuelta 1: AAAA-MM-DD · vuelta 2: AAAA-MM-DD · vuelta 3: AAAA-MM-DD · extra N: AAAA-MM-DD` (un `extra N` por cada vuelta extra); vacío si aún no se enseñó ninguno.
+- `pistas`: la lista de pistas de la vuelta extra en curso, con las ya buscadas tachadas; vacío si no hay vuelta extra.
 - `carpeta_personal`: la carpeta de usuario del dueño en esta compu. De aquí salen todas las rutas fuera del cerebro: con ella escrita no se leen variables del sistema ni se sube de carpeta (AGENTS.md, punto 5). Si está vacía, el arranque la llena una vez, en este campo de arriba y nunca como renglón suelto al final; se cambia a mano solo si el negocio vive en otra carpeta.
 - Al cerrar el arranque y al cerrar cada sesión, el agente relee este archivo renglón por renglón contra lo que el dueño contestó y corrige cada «sin dato», «pendiente» o «sin revisar» que ya tiene respuesta.
 - `pendientes` (abajo): solo lo que de verdad espera. Lo que ya se hizo se quita; al cerrar el arranque esta lista se reescribe entera.

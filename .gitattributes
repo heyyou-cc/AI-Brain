@@ -1,0 +1,11 @@
+# Al juntar cambios de dos compus (sistema/alarmas/sincronizar.sh), estas libretas guardan los renglones de los dos lados, sin marcas, porque en ellas solo se agregan renglones.
+# Todo lo demás, notas incluidas, va con el merge normal: si choca, queda la versión de esta compu, la otra al lado como <nombre>.remoto.<ext>, y el asistente las junta a mano.
+# No agregues aquí una nota donde un dato se corrige en su renglón (estado, tableros, índices, notas de conocimiento): juntar sus dos lados la dejaría con el dato dos veces.
+sistema/bitacora.md merge=union
+sistema/registro-del-barrido.md merge=union
+sistema/golpes.md merge=union
+sistema/decisiones.md merge=union
+sistema/exclusiones.md merge=union
+sistema/ideas-para-automatizar.md merge=union
+conocimiento/dueno/correcciones.md merge=union
+fuentes/_registro.md merge=union

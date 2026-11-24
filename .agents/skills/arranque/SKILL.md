@@ -1,6 +1,6 @@
 ---
 name: arranque
-description: Conoce al dueño y a su negocio la primera vez. Su primer mensaje es siempre el aviso de qué va a revisar, palabra por palabra y en el trato del dueño; antes de que conteste no abre nada fuera de esta carpeta. Con su permiso revisa sus carpetas, sus conversaciones con la IA, sus conectores y su web, pregunta solo lo que falta y cierra siempre con el DNA del negocio, aunque el dueño se vaya antes. Si una sesión encuentra el arranque sin cerrar, lo termina sin pedir permiso. Úsala cuando escriba /arranque (o $arranque en Codex) o «conóceme», o en el primer mensaje si el cerebro está vacío.
+description: Conoce al dueño y a su negocio la primera vez, sin pedir permiso: su primer mensaje avisa qué va a revisar y en ese mismo turno empieza. Revisa en tres vueltas (compu y conversaciones, conectores, internet), enseña el tablero de las 30 P al cerrar cada vuelta, pregunta solo lo que falta y cierra siempre con el DNA del negocio, aunque el dueño se vaya antes. Si una sesión encuentra el arranque sin cerrar, lo termina. Úsala cuando escriba /arranque (o $arranque en Codex) o «conóceme», o en el primer mensaje si el cerebro está vacío.
 metadata:
   short-description: Avisar, revisar y conocer al dueño y su negocio
 ---

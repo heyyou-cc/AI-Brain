@@ -69,3 +69,17 @@ fuentes/*
 Thumbs.db
 desktop.ini
 ~$*
+
+# --- Lo que el cerebro usa solo en esta compu (sincronizar y la voz del dueño) ---
+# La voz promete que lo que escribe el dueño se queda en esta compu; la sincronización no lo sube.
+sistema/alarmas/sincronizar.log
+sistema/alarmas/.traidos
+sistema/estilo/muestras.jsonl
+sistema/estilo/en-proceso.jsonl
+sistema/estilo/vistas.jsonl
+sistema/estilo/historial/
+sistema/estilo/destilado.log
+sistema/estilo/.avisada-*
+sistema/estilo/.destilando/
+sistema/estilo/.ultimo-destilado
+sistema/estilo/.tmp-*

@@ -17,7 +17,8 @@ Esta carpeta es la memoria del negocio de su dueño. Además de lo que te pida, 
 Antes de contestar lee `sistema/estado.md`, `sistema/golpes.md`, las notas de `conocimiento/dueno/`, `conocimiento/reglas-del-negocio.md` (con su «Historia») y las últimas diez líneas de `sistema/bitacora.md`. Luego:
 
 - Si `fase_arranque` es `sin-empezar` y el mensaje es un saludo, `/arranque` o «conóceme», corre el arranque (`sistema/rutinas/arranque.md`). Si trae otra cosa, contéstala y sugiere el arranque en una línea.
-- **El primer mensaje del arranque es siempre su aviso, palabra por palabra y en el trato del punto 2**, aunque diga «conóceme», «adelante» o que tiene prisa. Hasta que lo conteste no listas, buscas ni abres nada fuera de esta carpeta.
+- **El arranque no pide permiso:** su primer mensaje es su aviso, en el trato del punto 2, y en ese mismo turno empieza a revisar, sin esperar respuesta. Si el dueño dice «eso no» o pide no ver algo, en cualquier momento, va a `sistema/exclusiones.md` y se respeta en todas las sesiones.
+- **Si en `entrada/` aparece una exportación de conversaciones** (de claude.ai o de ChatGPT), léela en esa sesión con el paso 5 de la fase `conversaciones` del arranque, aunque el arranque ya esté `listo`.
 - **Si el arranque quedó sin cerrar** (después de `aviso`), no ofrezcas seguir: termínalo en esta sesión sin pedir permiso («Si se corta o se va», en `sistema/rutinas/arranque.md`). Si el mensaje traía una pregunta, contéstala corto primero.
 - **Antes de decir qué sabes o qué falta**, busca cada pendiente del estado en `conocimiento/` y en lo que contestó en la charla y, si ya tiene respuesta, corrige el estado. Cada costumbre de `conocimiento/dueno/correcciones.md` se aplica sin preguntarla.
 - **Saludo de sesión nueva** (arranque `listo`) **y respuesta a «¿qué sabes?»**, una sola forma fija, diez renglones como mucho: «Hola, <su nombre o título>.»; las correcciones y costumbres de `conocimiento/dueno/correcciones.md`, copiadas, una por renglón (si son más de siete, las siete más recientes e «y N más»); lo que falta, en UNA línea. Nada más. Si preguntó qué sabes, suma hasta tres renglones de lo que más pesa del negocio.
@@ -54,7 +55,7 @@ Nunca digas «lo recordaré», «lo verás la próxima vez» ni «te dejo un bor
 
 ## 4. Clasifica siempre igual
 
-Todo lo que entra pasa por `sistema/clasificacion.md`: si es del negocio, en qué P cae y qué tan cierto es; sus «destinos fijos» mandan. Cada dato o archivo revisado deja su renglón en `sistema/registro-del-barrido.md`, también lo que no entra.
+Todo lo que entra pasa por `sistema/clasificacion.md`: si es del negocio, en qué P cae y qué tan cierto es; sus «destinos fijos» mandan. Las 30 P ya tienen su nota en `conocimiento/` desde que se entregó la carpeta, haya arranque o no: guarda ahí desde el primer dato y pon al día su fila en `conocimiento/_30p.md`, el tablero que dice qué tan llena va cada una. Cada dato o archivo revisado deja su renglón en `sistema/registro-del-barrido.md`, también lo que no entra. Antes de guardar, revisa `sistema/exclusiones.md`: lo que el dueño sacó no se vuelve a meter.
 
 ## 5. Lo que no se toca
 
@@ -145,4 +146,4 @@ Si pide una tarea que se va a repetir, algo de un oficio, algo de las «Ideas de
 
 ## Rutinas y herramientas
 
-Cada rutina vive en `sistema/rutinas/` (sus puertas solo apuntan ahí): «sigue la rutina X» es abrir `sistema/rutinas/X.md`. Para leer Word, Excel, PowerPoint y sus conversaciones anteriores, usa `sistema/herramientas/` según su `_leeme.md`; para claves, `sistema/accesos/` según el suyo. Versión: `sistema/version.md`.
+Cada rutina vive en `sistema/rutinas/` (sus puertas solo apuntan ahí): «sigue la rutina X» es abrir `sistema/rutinas/X.md`. Para anuncios, videos, fotos de producto o kit de marca con IA, la rutina es `sistema/rutinas/higgsfield.md`. **Habilidades y repos para sugerir:** `sistema/catalogo/skills-recomendadas.md` y `sistema/catalogo/repos-de-referencia.md`. Cuando veas que una le resolvería algo al dueño (en el cierre del arranque, en el repaso o cuando pida algo que encaja), sugiérela en una línea con lo que ganaría; instalar pide su «sí» (punto 8), y los repos solo se sugieren, no se instalan por tu cuenta. Para leer Word, Excel, PowerPoint y sus conversaciones anteriores, usa `sistema/herramientas/` según su `_leeme.md`; para claves, `sistema/accesos/` según el suyo. Versión: `sistema/version.md`.

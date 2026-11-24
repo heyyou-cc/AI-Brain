@@ -6,4 +6,5 @@ Forma: `- [nombre](nombre.md) · para qué sirve · P01, P18 · actualizada AAAA
 
 ## Notas
 
-Ninguna todavía.
+- [personas](personas.md) · quién trabaja aquí, qué hace de verdad y qué sabe · P01 · plantilla
+- [quien-decide](quien-decide.md) · quién decide de verdad (también lo que decide el dueño), quién influye en él, quién puede frenar un cambio · P18 · plantilla

@@ -5,17 +5,22 @@
 # Las conversaciones que se tuvieron dentro de la carpeta actual (el cerebro) no salen.
 # Lee el JSON con JXA (osascript), que trae el Mac.
 # Uso: bash extraer-conversaciones.sh -CarpetaPersonal ruta [-Pagina N] [-Tamano 20000]
+# Con -Exportacion "ruta" lee, en vez de Claude Code y Codex, la exportacion de claude.ai o de ChatGPT:
+# el .zip tal cual o el conversations.json ya descomprimido. Detecta el formato solo.
+# Un .zip se abre en memoria con unzip -p (o con python3 si no hay unzip); no se escribe nada.
 
 CARPETA="$HOME"
 PAGINA="1"
 TAMANO="20000"
 SALIDA=""
+EXPORT=""
 while [ $# -gt 0 ]; do
   case "$1" in
     -CarpetaPersonal|--carpeta-personal) CARPETA="$2"; shift 2 ;;
     -Pagina|--pagina) PAGINA="$2"; shift 2 ;;
     -Tamano|--tamano) TAMANO="$2"; shift 2 ;;
     -Salida|--salida) SALIDA="$2"; shift 2 ;;
+    -Exportacion|--exportacion) EXPORT="$2"; shift 2 ;;
     *) shift ;;
   esac
 done
@@ -151,29 +156,109 @@ function procesar(a) {
   return res;
 }
 
+//EXPORT-INICIO
+function leerStdin() {
+  var d = $.NSFileHandle.fileHandleWithStandardInput.readDataToEndOfFile;
+  var s = $.NSString.alloc.initWithDataEncoding(d, $.NSUTF8StringEncoding);
+  var u = ObjC.unwrap(s);
+  return (typeof u === 'string') ? u : '';
+}
+
+function epocaATexto(v, respaldo) {
+  if (typeof v !== 'number' || !isFinite(v)) return respaldo;
+  return new Date(Math.floor(v) * 1000).toISOString();
+}
+
+function mensajesClaude(conv) {
+  var out = [];
+  var ms = Array.isArray(conv.chat_messages) ? conv.chat_messages : [];
+  for (var i = 0; i < ms.length; i++) {
+    var m = ms[i];
+    if (!m || m.sender !== 'human') continue;
+    var tx = (typeof m.text === 'string') ? m.text : '';
+    if (tx.trim() === '' && Array.isArray(m.content)) {
+      var partes = [];
+      for (var j = 0; j < m.content.length; j++) {
+        var b = m.content[j];
+        if (b && b.type === 'text' && typeof b.text === 'string') partes.push(b.text);
+      }
+      tx = partes.join('\n');
+    }
+    if (!esRuido(tx)) out.push({ ts: m.created_at, texto: tx });
+  }
+  return out;
+}
+
+function mensajesChatGPT(conv, tsConv) {
+  var out = [];
+  var mapa = (conv.mapping && typeof conv.mapping === 'object') ? conv.mapping : {};
+  var nodos = [];
+  var actual = conv.current_node;
+  if (typeof actual === 'string' && mapa[actual]) {
+    // rama activa: de la hoja hacia la raiz, puesta al derecho
+    var vistos = {};
+    while (typeof actual === 'string' && mapa[actual] && !vistos[actual]) {
+      vistos[actual] = true;
+      nodos.unshift(mapa[actual]);
+      actual = mapa[actual].parent;
+    }
+  } else {
+    for (var k in mapa) if (Object.prototype.hasOwnProperty.call(mapa, k)) nodos.push(mapa[k]);
+    nodos.sort(function (a, b) {
+      var ta = (a && a.message && a.message.create_time) || 0, tb = (b && b.message && b.message.create_time) || 0;
+      return ta - tb;
+    });
+  }
+  for (var i = 0; i < nodos.length; i++) {
+    var msg = nodos[i] && nodos[i].message;
+    if (!msg || !msg.author || msg.author.role !== 'user') continue;
+    if (msg.metadata && msg.metadata.is_visually_hidden_from_conversation === true) continue;
+    var c = msg.content || {};
+    if (c.content_type && c.content_type !== 'text' && c.content_type !== 'multimodal_text') continue;
+    var partes = [];
+    if (Array.isArray(c.parts)) {
+      for (var j = 0; j < c.parts.length; j++) {
+        if (typeof c.parts[j] === 'string' && c.parts[j].trim() !== '') partes.push(c.parts[j]);
+      }
+    }
+    var tx = partes.join('\n');
+    if (esRuido(tx)) continue;
+    out.push({ ts: epocaATexto(msg.create_time, tsConv), texto: tx });
+  }
+  return out;
+}
+
+// Devuelve la lista de conversaciones listas: { origen, f, etiqueta, msgs }, las mas nuevas primero.
+function conversacionesDeExportacion(textos) {
+  var items = [], desconocidas = 0;
+  for (var t = 0; t < textos.length; t++) {
+    var raiz;
+    var crudo = textos[t].replace(new RegExp('^' + String.fromCharCode(0xFEFF)), '');
+    if (crudo.replace(/\s+/g, '') === '') continue;
+    try { raiz = JSON.parse(crudo); } catch (e) { continue; }
+    var lista = Array.isArray(raiz) ? raiz : [raiz];
+    for (var i = 0; i < lista.length; i++) {
+      var c = lista[i];
+      if (!c || typeof c !== 'object') continue;
+      if (Array.isArray(c.chat_messages)) {
+        items.push({ conv: c, origen: 'claude.ai', titulo: String(c.name || ''), ts: c.created_at || '', f: fecha(c.created_at, null) });
+      } else if (c.mapping && typeof c.mapping === 'object') {
+        var ts = epocaATexto(c.create_time, '');
+        items.push({ conv: c, origen: 'chatgpt', titulo: String(c.title || ''), ts: ts, f: fecha(ts, null) });
+      } else desconocidas++;
+    }
+  }
+  items.sort(function (a, b) { return (b.f ? b.f.getTime() : 0) - (a.f ? a.f.getTime() : 0); });
+  return { items: items.slice(0, MAX_CONV), desconocidas: desconocidas };
+}
+//EXPORT-FIN
+
 function run(argv) {
   var cp = argv[0], pagina = parseInt(argv[1], 10), tam = parseInt(argv[2], 10), cerebro = normal(argv[3]);
+  var modoExport = argv[4] === 'exportacion';
   if (!(pagina >= 1)) pagina = 1;
   if (!(tam >= 4000)) tam = 4000;
   var pieza = tam - 1000;
-  var archivos = [];
-  var dClaude = cp + '/.claude/projects';
-  var ds = io_listar(dClaude);
-  for (var i = 0; i < ds.length; i++) {
-    var sub = dClaude + '/' + ds[i];
-    if (!io_es_dir(sub)) continue;
-    var fs = io_listar(sub);
-    for (var j = 0; j < fs.length; j++) {
-      var p = sub + '/' + fs[j];
-      if (/\.jsonl$/.test(fs[j]) && !io_es_dir(p)) archivos.push({ ruta: p, origen: 'claude-code' });
-    }
-  }
-  var rs = [];
-  caminar(cp + '/.codex/sessions', rs);
-  for (var r = 0; r < rs.length; r++) archivos.push({ ruta: rs[r], origen: 'codex' });
-  for (var m = 0; m < archivos.length; m++) archivos[m].mt = io_mtime(archivos[m].ruta);
-  archivos.sort(function (x, y) { return y.mt - x.mt; });
-  archivos = archivos.slice(0, MAX_CONV);
 
   var paginas = [], actual = '', sigue = '';
   function cerrar() { if (actual.length > 0) { paginas.push(actual); actual = ''; } }
@@ -185,22 +270,16 @@ function run(argv) {
     actual += bloque;
   }
 
-  var leidas = 0, conDueno = 0, delCerebro = 0, saltadas = 0, total = 0, tope = false;
-  for (var q = 0; q < archivos.length; q++) {
-    var a = archivos[q];
-    leidas++;
-    if (tope) { saltadas++; continue; }
-    var res = procesar(a);
-    if (res === null || res.sub || res.msgs.length === 0) { saltadas++; continue; }
-    var nc = normal(res.cwd);
-    if (cerebro && nc && (nc === cerebro || nc.indexOf(cerebro + '/') === 0)) { delCerebro++; continue; }
+  var leidas = 0, conDueno = 0, delCerebro = 0, saltadas = 0, total = 0, tope = false, desconocidas = 0;
+
+  // Imprime una conversacion ya reducida a los mensajes del dueno.
+  function emitir(origen, f0, etiqueta, msgs) {
     var num = conDueno + 1;
-    var f0 = fecha(res.msgs[0].ts, new Date(a.mt));
-    var cab = '\n=== Conversacion ' + num + ' | ' + a.origen + ' | ' + fmtHora(f0) + ' | carpeta: ' + res.cwd + ' ===\n';
+    var cab = '\n=== Conversacion ' + num + ' | ' + origen + ' | ' + fmtHora(f0) + ' | ' + etiqueta + ' ===\n';
     var bloques = [];
-    for (var k = 0; k < res.msgs.length; k++) {
-      var fm2 = fecha(res.msgs[k].ts, f0);
-      var tx = tapar(res.msgs[k].texto.replace(/\r\n/g, '\n').trim());
+    for (var k = 0; k < msgs.length; k++) {
+      var fm2 = fecha(msgs[k].ts, f0);
+      var tx = tapar(msgs[k].texto.replace(/\r\n/g, '\n').trim());
       var titulo = '\n### ' + fmtHora(fm2) + '\n\n';
       if (tx.length <= pieza) { bloques.push(titulo + tx + '\n'); }
       else {
@@ -211,18 +290,72 @@ function run(argv) {
     }
     var largo = cab.length;
     for (var b = 0; b < bloques.length; b++) largo += bloques[b].length;
-    if (total + largo > MAX_CARACTERES) { tope = true; saltadas++; continue; }
+    if (total + largo > MAX_CARACTERES) { tope = true; saltadas++; return; }
     conDueno++;
     total += largo;
-    sigue = '(sigue la conversacion ' + num + ' | ' + a.origen + ' | ' + fmtHora(f0) + ')\n';
+    sigue = '(sigue la conversacion ' + num + ' | ' + origen + ' | ' + fmtHora(f0) + ')\n';
     agregar(cab, true);
     for (var b2 = 0; b2 < bloques.length; b2++) agregar(bloques[b2], false);
+  }
+
+  if (modoExport) {
+    var textos = leerStdin().split('\n@@@SEPARADOR@@@\n');
+    var r = conversacionesDeExportacion(textos);
+    desconocidas = r.desconocidas;
+    for (var q0 = 0; q0 < r.items.length; q0++) {
+      var it = r.items[q0];
+      leidas++;
+      if (tope) { saltadas++; continue; }
+      var ms = (it.origen === 'claude.ai') ? mensajesClaude(it.conv) : mensajesChatGPT(it.conv, it.ts);
+      if (ms.length === 0) { saltadas++; continue; }
+      var f0e = it.f || fecha(ms[0].ts, new Date());
+      var tit = tapar(it.titulo).replace(/\s+/g, ' ').trim();
+      if (tit === '') tit = '(sin titulo)';
+      emitir(it.origen, f0e, 'titulo: ' + tit, ms);
+    }
+  } else {
+    var archivos = [];
+    var dClaude = cp + '/.claude/projects';
+    var ds = io_listar(dClaude);
+    for (var i = 0; i < ds.length; i++) {
+      var sub = dClaude + '/' + ds[i];
+      if (!io_es_dir(sub)) continue;
+      var fs = io_listar(sub);
+      for (var j = 0; j < fs.length; j++) {
+        var p = sub + '/' + fs[j];
+        if (/\.jsonl$/.test(fs[j]) && !io_es_dir(p)) archivos.push({ ruta: p, origen: 'claude-code' });
+      }
+    }
+    var rs = [];
+    caminar(cp + '/.codex/sessions', rs);
+    for (var rr = 0; rr < rs.length; rr++) archivos.push({ ruta: rs[rr], origen: 'codex' });
+    for (var m = 0; m < archivos.length; m++) archivos[m].mt = io_mtime(archivos[m].ruta);
+    archivos.sort(function (x, y) { return y.mt - x.mt; });
+    archivos = archivos.slice(0, MAX_CONV);
+
+    for (var q = 0; q < archivos.length; q++) {
+      var a = archivos[q];
+      leidas++;
+      if (tope) { saltadas++; continue; }
+      var res = procesar(a);
+      if (res === null || res.sub || res.msgs.length === 0) { saltadas++; continue; }
+      var nc = normal(res.cwd);
+      if (cerebro && nc && (nc === cerebro || nc.indexOf(cerebro + '/') === 0)) { delCerebro++; continue; }
+      emitir(a.origen, fecha(res.msgs[0].ts, new Date(a.mt)), 'carpeta: ' + res.cwd, res.msgs);
+    }
   }
   cerrar();
 
   var M = paginas.length;
-  var resumen = 'Resumen: leyo ' + leidas + ' conversaciones; con mensajes del dueno: ' + conDueno + '; de esta misma carpeta (no salen): ' + delCerebro + '; saltadas: ' + saltadas + '; claves tapadas en total: ' + tapadas + '.' + (tope ? ' Se alcanzo el tope de 400 000 caracteres: las mas viejas no salen.' : '');
-  if (M === 0) return 'No hay conversaciones del dueno fuera de esta carpeta.\n' + resumen;
+  var extra = tope ? ' Se alcanzo el tope de 400 000 caracteres: las mas viejas no salen.' : '';
+  var resumen;
+  if (modoExport) {
+    resumen = 'Resumen: leyo ' + leidas + ' conversaciones de la exportacion; con mensajes del dueno: ' + conDueno + '; saltadas: ' + saltadas + '; claves tapadas en total: ' + tapadas + '.' + extra +
+      (desconocidas > 0 ? ' Entradas con formato desconocido (se ignoraron): ' + desconocidas + '.' : '');
+  } else {
+    resumen = 'Resumen: leyo ' + leidas + ' conversaciones; con mensajes del dueno: ' + conDueno + '; de esta misma carpeta (no salen): ' + delCerebro + '; saltadas: ' + saltadas + '; claves tapadas en total: ' + tapadas + '.' + extra;
+  }
+  if (M === 0) return (modoExport ? 'No hay mensajes del dueno en esa exportacion.' : 'No hay conversaciones del dueno fuera de esta carpeta.') + '\n' + resumen;
   if (pagina > M) return 'No hay pagina ' + pagina + ': son ' + M + ' paginas.\n' + resumen;
   var txt = paginas[pagina - 1];
   var enPagina = txt.split('[clave tapada]').length - 1;
@@ -231,4 +364,47 @@ function run(argv) {
 }
 EOF
 
-osascript -l JavaScript -e "$JS" "$CARPETA" "$PAGINA" "$TAMANO" "$PWD"
+if [ -n "$EXPORT" ]; then
+  if [ ! -f "$EXPORT" ]; then
+    echo "No encontre el archivo de exportacion: $EXPORT"
+    exit 1
+  fi
+  SEP=$'\n@@@SEPARADOR@@@\n'
+  if [ "$(head -c 2 "$EXPORT")" = "PK" ]; then
+    # .zip: se lee en memoria, sin escribir nada
+    if command -v unzip >/dev/null 2>&1; then
+      ENTRADAS="$(unzip -Z1 "$EXPORT" 2>/dev/null | grep -E '(^|/)conversations(-[0-9]+)?\.json$')"
+      if [ -z "$ENTRADAS" ]; then
+        echo 'El .zip no trae ningun conversations.json. Revisa que sea la exportacion de claude.ai o de ChatGPT.'
+        exit 1
+      fi
+      DATOS=""
+      while IFS= read -r E; do
+        [ -z "$E" ] && continue
+        [ -n "$DATOS" ] && DATOS="$DATOS$SEP"
+        DATOS="$DATOS$(unzip -p "$EXPORT" "$E")"
+      done <<< "$ENTRADAS"
+    elif command -v python3 >/dev/null 2>&1; then
+      DATOS="$(python3 -I -c '
+import re, sys, zipfile
+z = zipfile.ZipFile(sys.argv[1])
+n = [i for i in z.namelist() if re.search(r"(^|/)conversations(-[0-9]+)?\.json$", i)]
+if not n:
+    sys.exit(3)
+sys.stdout.buffer.write("\n@@@SEPARADOR@@@\n".join(z.read(i).decode("utf-8") for i in n).encode("utf-8"))
+' "$EXPORT")"
+      if [ $? -ne 0 ] || [ -z "$DATOS" ]; then
+        echo 'El .zip no trae ningun conversations.json. Revisa que sea la exportacion de claude.ai o de ChatGPT.'
+        exit 1
+      fi
+    else
+      echo 'Para abrir el .zip hace falta unzip o python3 y esta compu no tiene ninguno. Descomprime el .zip fuera de esta carpeta y pasa el conversations.json con -Exportacion.'
+      exit 1
+    fi
+  else
+    DATOS="$(cat "$EXPORT")"
+  fi
+  printf '%s' "$DATOS" | osascript -l JavaScript -e "$JS" "$CARPETA" "$PAGINA" "$TAMANO" "$PWD" exportacion
+else
+  osascript -l JavaScript -e "$JS" "$CARPETA" "$PAGINA" "$TAMANO" "$PWD"
+fi

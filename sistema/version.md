@@ -2,24 +2,26 @@
 
 Para qué sirve: dice qué versión es esta carpeta y qué archivos son nuestros (heyyou los puede reemplazar en una versión nueva) y cuáles son del dueño (nunca se pisan). Quien ponga una versión nueva encima reemplaza solo lo nuestro.
 
-- Versión: 1.9.5
-- Fecha: 2026-11-20
-- Probada en: la 1.8, en Claude Code; la 1.9, la 1.9.1 y la 1.9.2 falta correrlas enteras. La herramienta de leer documentos se corrió en Windows (PowerShell 5.1 y Git Bash) con documentos de ejemplo, y las dos versiones dan la misma salida; en un Mac no se ha corrido. Codex queda configurado según su documentación, sin correrlo.
+- Versión: 1.10.0
+- Fecha: 2026-11-23
+- Probada en: la 1.8, en Claude Code; la 1.9 a la 1.10 falta correrlas enteras. La herramienta de leer documentos se corrió en Windows (PowerShell 5.1 y Git Bash) con documentos de ejemplo, y las dos versiones dan la misma salida; en un Mac no se ha corrido. El extractor de exportaciones de claude.ai y ChatGPT (`-Exportacion`) se probó en PowerShell 5.1 con archivos de muestra, `.zip` y `.json`; la versión `.sh` se probó solo en su lógica, con Node en vez de `osascript`, y no se ha corrido en un Mac. Codex queda configurado según su documentación, sin correrlo.
 
 ## Nuestros: se pueden reemplazar en una versión nueva
 
 - `AGENTS.md`, `CLAUDE.md` y `LEEME.md`.
-- `.claude/settings.json` y `.codex/config.toml`.
-- Las siete rutinas de fábrica en `sistema/rutinas/`: `arranque.md`, `dna-del-negocio.md`, `repaso-semanal.md`, `nuevo-entregable.md`, `proponer-automatizacion.md`, `crear-empleado.md` y `corregir-chamba.md`.
-- Sus puertas: `.claude/skills/<rutina>/SKILL.md` y `.agents/skills/<rutina>/SKILL.md` de esas siete.
-- `sistema/clasificacion.md`, todo `sistema/herramientas/`, todo `sistema/alarmas/` (menos `.ultima-orden`), todo `sistema/accesos/` (menos `.caja` y `.caja-linux`, que son del dueño), `sistema/tareas/probar-alarmas.md` y `sistema/tareas/conectar-caja-fuerte.md` si siguen en la carpeta, y este archivo.
+- `.claude/settings.json`, `.codex/config.toml` y `.gitattributes`.
+- Las ocho rutinas de fábrica en `sistema/rutinas/`: `arranque.md`, `dna-del-negocio.md`, `repaso-semanal.md`, `nuevo-entregable.md`, `proponer-automatizacion.md`, `crear-empleado.md`, `corregir-chamba.md` y `higgsfield.md`.
+- Sus puertas: `.claude/skills/<rutina>/SKILL.md` y `.agents/skills/<rutina>/SKILL.md` de esas ocho.
+- Todo `sistema/catalogo/` (`_leeme.md`, `repos-de-referencia.md` y `skills-recomendadas.md`): listas de consulta que heyyou pone al día.
+- `sistema/clasificacion.md`, todo `sistema/herramientas/`, todo `sistema/alarmas/` (menos `.ultima-orden`), todo `sistema/accesos/` (menos `.caja` y `.caja-linux`, que son del dueño), `sistema/tareas/probar-alarmas.md` y `sistema/tareas/conectar-caja-fuerte.md` y `sistema/tareas/conectar-respaldo.md` si siguen en la carpeta, y este archivo.
 - En `empleados/`, las fichas del catálogo de ejemplos que siguen en estado «dormido», y las primeras líneas de `empleados/_indice.md` (para qué sirve cada sección). Una versión nueva puede agregar fichas al catálogo y sus renglones, pero no toca los estados, los puestos creados para el negocio ni sus ideas de puestos.
 - Los `_leeme.md` de `entrada/` y `entrada/por-clasificar/`, y las primeras líneas (para qué sirve y forma) de las libretas de `sistema/`, sin tocar lo que el dueño ya tiene debajo.
 
 ## Del dueño: nunca se pisan
 
-- Todo `conocimiento/`, aunque una nota siga siendo plantilla (si una versión nueva trae otra forma, se propone, no se pisa; si trae una nota que falta, como la lista de correcciones, se agrega vacía).
+- Todo `conocimiento/`, también las 30 notas de las 30 P y `conocimiento/_30p.md` (el tablero), aunque una nota siga siendo plantilla (si una versión nueva trae otra forma, se propone, no se pisa; si trae una nota que falta, como la lista de correcciones, se agrega vacía).
 - Todo `trabajo/`, `fuentes/` y `entrada/` (fuera de sus `_leeme.md`).
+- `sistema/exclusiones.md` (lo que el dueño pidió que no se vea ni se guarde) y `sistema/sincronizar.conf` (la dirección de su repositorio propio).
 - `sistema/estado.md`, `sistema/registro-del-barrido.md`, `sistema/golpes.md`, `sistema/decisiones.md`, `sistema/ideas-para-automatizar.md` y `sistema/bitacora.md`, en lo que está debajo de sus primeras líneas.
 - Las fichas de `empleados/` que ya se despertaron o que se crearon para el negocio, sus renglones y los estados de `empleados/_indice.md`.
 - Las rutinas que el dueño aceptó después y sus puertas (lista de abajo), y `.claude/settings.local.json` si existe.
@@ -32,7 +34,17 @@ Ninguna todavía.
 
 ## Historia de versiones
 
-- 1.9.5 · 2026-11-20 · Las claves del negocio viven solo en el 1Password del dueño (decisión en `sistema/decisiones.md`). Nuevo `sistema/accesos/`: la ventanita (un cuadro aparte donde el dueño escribe una clave sin que pase por el chat y se guarda en 1Password) y el mesero (lleva claves de 1Password a un programa o a un archivo sin que el asistente las vea), en PowerShell y en sh; el asistente abre 1Password con una llave de servicio guardada en la caja de la compu (cifrada en Windows, Llavero en Mac). Nueva alarma de la consola que frena usar 1Password directo, la llave y volcar variables. Nueva tarea `sistema/tareas/conectar-caja-fuerte.md` que instala 1Password avisando (se quita la regla de no instalar nada para 1Password) y lo conecta con el dueño; la llama el cierre del arranque. Probado en Windows contra un cajón de prueba; la ventana para escribir no la ha usado una persona; Mac y Linux sin correr. Codex no corre las alarmas.
+- 1.10.0 · 2026-11-23 · El arranque trabaja solo y se sincroniza solo, uno por renglón:
+  - El arranque ya no pide permiso: saluda, dice qué va a hacer y empieza en ese mismo turno. `permiso` pasa a `directo` (los valores viejos siguen valiendo). Lo personal y los archivos de claves siguen sin abrirse.
+  - Trabaja en tres vueltas que avisa paso a paso: lo que hay en la compu (carpetas y conversaciones con la IA, también las de la nube), los conectores y herramientas de la app (solo para leer) e internet, con la fase nueva `enriquecer` (busca por lo hallado: clientes, proveedores, competencia). Si salen pistas nuevas, hasta tres vueltas extra cortas. Usa sub-agentes por bloque.
+  - Las 30 P ya vienen armadas: 30 notas en `conocimiento/` y el tablero `conocimiento/_30p.md`. Cada dato va a su P desde el primero, y al cerrar cada vuelta el asistente enseña el tablero para que el dueño corrija. Los campos nuevos del estado son `vuelta_extra`, `enriquecer` y `tablero`, y las fases nuevas `tablero-1`, `tablero-2`, `tablero-3` y `pistas`.
+  - `sistema/exclusiones.md`: lo que el dueño saca con «eso no» queda apuntado, y el arranque lo revisa antes de abrir cada fuente y de guardar cada dato.
+  - El arranque pide la exportación de conversaciones de claude.ai y ChatGPT, y el extractor (`sistema/herramientas/extraer-conversaciones.ps1` y `.sh`) la lee con `-Exportacion`: acepta el `.zip` o el `conversations.json`, detecta el formato, deja solo los mensajes del dueño, tapa las claves y no escribe ningún archivo.
+  - Catálogos nuevos en `sistema/catalogo/` (habilidades recomendadas y proyectos de referencia, sin instalar nada sin el «sí» del dueño) y la rutina `sistema/rutinas/higgsfield.md` (anuncios, videos y fotos con IA, pide el «sí» antes de gastar créditos; sin probar).
+  - Sincronización automática con el repositorio propio y privado del dueño (`sistema/alarmas/sincronizar.sh`, enganchada al empezar, con cada mensaje, tras cada escritura y al terminar): guarda en un commit, junta lo de la otra compu con merge y sube. Solo sube y baja si origin es la dirección escrita en `sistema/sincronizar.conf`. Si la carpeta sigue unida a la plantilla de heyyou, o no tiene origin ni dirección, no hace nada, ni siquiera el commit, y avisa una vez por sesión. Las libretas donde solo se agregan renglones (bitácora, registro del barrido, golpes, decisiones, exclusiones, ideas, correcciones y registro de fuentes) juntan los dos lados solas (`.gitattributes`); en cualquier otro archivo que choca, notas incluidas, se queda la versión de esta compu, la otra queda al lado como `<nombre>.remoto.<ext>` y el asistente las junta a mano. Un archivo de más de 100 MB no entra al respaldo: queda solo en la compu y se avisa una vez. Nueva tarea `sistema/tareas/conectar-respaldo.md` para dejar el respaldo en línea con el «sí» del dueño. Probada en Windows (Git Bash) con dos copias de prueba sin internet: 63 de 63; en Mac y Linux no se ha corrido, ni contra GitHub de verdad.
+  - El LEEME trae pautas para que no se filtre lo que el dueño no quiere (mover lo privado, apagar conectores, claves que no se abren, por dónde pasa lo leído) y cómo bajar las exportaciones. No se volvió a probar en el banco: lo último medido es la 1.8.
+
+- 1.9.5 · 2026-11-20 · Las claves del negocio viven solo en el 1Password del dueño. Nuevo `sistema/accesos/`: la ventanita (un cuadro aparte donde el dueño escribe una clave sin que pase por el chat y se guarda en 1Password) y el mesero (lleva claves de 1Password a un programa o a un archivo sin que el asistente las vea), en PowerShell y en sh; el asistente abre 1Password con una llave de servicio guardada en la caja de la compu (cifrada en Windows, Llavero en Mac). Nueva alarma de la consola que frena usar 1Password directo, la llave y volcar variables. Nueva tarea `sistema/tareas/conectar-caja-fuerte.md` que instala 1Password avisando (se quita la regla de no instalar nada para 1Password) y lo conecta con el dueño; la llama el cierre del arranque. Probado en Windows contra un cajón de prueba; la ventana para escribir no la ha usado una persona; Mac y Linux sin correr. Codex no corre las alarmas.
 
 - 1.9.4 · 2026-11-19 · Alarmas automáticas en Claude Code (`sistema/alarmas/`, encendidas en `.claude/settings.json`): frenan escribir claves, tarjetas, CLABE, CURP o RFC de persona en una nota, frenan escribir fuera de la carpeta y, al terminar cada turno, revisan `entrada/_paso/` y la línea «Guardé:». Corren con `sh` en Mac, Linux y Windows con Git Bash. Probadas en Windows: 23 de 23 y dos en vivo; en Mac y Linux no. La primera vez que se corre el arranque en una compu, `sistema/tareas/probar-alarmas.md` las prueba y se borra (en Windows se borra sin probar). Codex no las corre.
 

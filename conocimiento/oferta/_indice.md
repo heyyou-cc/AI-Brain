@@ -6,4 +6,5 @@ Forma: `- [nombre](nombre.md) · para qué sirve · P09 · actualizada AAAA-MM-D
 
 ## Notas
 
-Ninguna todavía.
+- [productos](productos.md) · el catálogo: qué vende, todos sus precios y escalones, qué sale y qué deja más · P09 · plantilla
+- [precios](precios.md) · la lista de precios de todo lo que vende, con escalones y promociones · P09 · plantilla

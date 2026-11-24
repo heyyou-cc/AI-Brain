@@ -29,6 +29,10 @@ if [ -f "$marca" ]; then
   if [ -f sistema/estilo/.ultimo-destilado ] && [ ! conocimiento/dueno/como-hablarle.md -nt sistema/estilo/.ultimo-destilado ]; then
     cambiados=$(printf '%s\n' "$cambiados" | grep -v '^conocimiento/dueno/como-hablarle.md$')
   fi
+  # Lo que llegó de otra compu al sincronizar (sincronizar.sh) tampoco lo cambió el asistente.
+  if [ -s sistema/alarmas/.traidos ] && [ ! "$marca" -nt sistema/alarmas/.traidos ]; then
+    cambiados=$(printf '%s\n' "$cambiados" | grep -v -x -F -f sistema/alarmas/.traidos)
+  fi
   cambiados=$(printf '%s\n' "$cambiados" | grep -v '^$' | head -n 3)
   if [ -n "$cambiados" ]; then
     ultimo=$(printf '%s\n' "$entrada" | awk '{

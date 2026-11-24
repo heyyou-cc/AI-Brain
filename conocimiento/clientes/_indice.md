@@ -6,7 +6,10 @@ Forma de la línea: `- [nombre](nombre.md) · para qué sirve · P08, P28 · act
 
 ## Notas
 
-Ninguna todavía.
+- [publicidad](publicidad.md) · lo que hace para que lo conozcan: canales, gasto, quién lo lleva, qué funcionó · P06 · plantilla
+- [prospectos](prospectos.md) · cómo llegan los interesados, cuántos compran, dónde se pierden · P08 · plantilla
+- [postventa](postventa.md) · lo que pasa después de que el cliente recibe: seguimiento, quién, cuándo, recompra; o que no pasa nada · P28 · plantilla
+- [permanencia](permanencia.md) · cuánto se quedan los clientes, por qué se van, cuánto cuesta reponerlos · P29 · plantilla
 
 ## Fichas de clientes
 

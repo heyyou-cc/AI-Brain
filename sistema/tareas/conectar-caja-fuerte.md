@@ -4,7 +4,7 @@ Para qué sirve: dejar listo, una sola vez por compu, el 1Password donde viven l
 
 ## Parte 1 · Instalar (sin preguntar, solo avisando)
 
-El dueño decidió que el cerebro instala 1Password (`sistema/decisiones.md`, 2026-11-20). Antes de instalar dile en una línea: «Voy a instalar 1Password en tu compu: ahí vivirán tus claves, y yo las usaré sin verlas».
+El cerebro viene armado para instalar 1Password (versión 1.9.5 en `sistema/version.md`). Antes de instalar dile en una línea: «Voy a instalar 1Password en tu compu: ahí vivirán tus claves, y yo las usaré sin verlas».
 
 1. Revisa si ya está: `op --version`. Si responde, salta a la parte 2.
 2. Windows: `winget install --id AgileBits.1Password.CLI -e --accept-source-agreements --accept-package-agreements`. Luego, en una consola nueva, `op --version`. Si `op` no aparece, búscalo en `<carpeta_personal>/AppData/Local/Microsoft/WinGet/Links/op.exe`.

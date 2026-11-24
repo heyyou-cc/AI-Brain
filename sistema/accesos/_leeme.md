@@ -4,7 +4,7 @@ Para qué sirve: que las claves del negocio vivan solo en el 1Password del dueñ
 
 Cómo abre 1Password el asistente: con una **llave de servicio** de 1Password que el dueño crea una vez y escribe en la ventanita. Esa llave queda en la caja de esta compu: en Windows, cifrada para el usuario (`sistema/accesos/.caja`); en Mac, en el Llavero; en Linux, en el llavero del escritorio o, si no hay, en `sistema/accesos/.caja-linux`, que solo puede leer ese usuario. Ninguna de esas se abre a mano: la alarma de la consola lo frena. Si 1Password todavía no está instalado o conectado, sigue `sistema/tareas/conectar-caja-fuerte.md`.
 
-Necesita el ayudante de terminal de 1Password (`op`). Es lo único que el cerebro instala (decisión del 2026-11-20 en `sistema/decisiones.md`).
+Necesita el ayudante de terminal de 1Password (`op`). Es lo único que el cerebro instala (así viene armado de fábrica: ver la versión 1.9.5 en `sistema/version.md`).
 
 ## Ventanita
 

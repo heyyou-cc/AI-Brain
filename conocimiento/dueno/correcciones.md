@@ -27,4 +27,4 @@ Ejemplos de forma, no reales:
 
 ## Correcciones
 
-- 2026-11-19 · corrección · háblame como yo hablo, sencillo y fácil de imaginar, no técnico; que salga solo · quedó en: conocimiento/dueno/como-hablarle.md y sistema/golpes.md · DNA: no
+Ninguna todavía.

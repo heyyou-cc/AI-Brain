@@ -12,4 +12,4 @@ Si el mismo golpe se repite, no se escribe otra línea: se le suma una vez y se 
 
 ## Golpes
 
-- 2026-11-19 · qué pasó: le expliqué lo de otro programa con nombres técnicos y siglas, sin copiar cómo escribe él, y no me entendió · regla: antes de mandar cada mensaje, compararlo con su último mensaje y con cómo-hablarle; si trae una palabra que él no usaría, cambiarla por una cotidiana o un ejemplo · dónde quedó: AGENTS.md, punto 2, y conocimiento/dueno/como-hablarle.md · veces: 1
+Ninguno todavía.

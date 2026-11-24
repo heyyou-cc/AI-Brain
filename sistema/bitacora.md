@@ -8,5 +8,4 @@ El repaso semanal agrega aquí dos líneas más: `- AAAA-MM-DD · Idea de la sem
 
 ## Líneas
 
-- 2026-11-20 · Claves solo en 1Password: ventanita para que el dueño las escriba sin pasar por el chat, mesero para usarlas sin verlas, alarma de la consola y tarea que instala y conecta 1Password; probado en Windows contra el cajón de prueba de José · guardé: sistema/accesos/, sistema/alarmas/antes-de-la-consola.sh, sistema/tareas/conectar-caja-fuerte.md, AGENTS.md (puntos 3, 5 y 8), sistema/decisiones.md, conocimiento/operacion/accesos.md, sistema/version.md (1.9.5) · pendiente: que una persona pruebe la ventana para escribir; Mac y Linux sin correr
-- 2026-11-19 · Se tomó lo útil del repo ECC: el asistente aprende solo cómo escribe el dueño por 30 días, dos puestos nuevos y mejores recetas en nueve, y tres alarmas que cuidan claves, la carpeta y el «Guardé»; probadas en Windows, también en sesión nueva · guardé: sistema/alarmas/, sistema/tareas/probar-alarmas.md, empleados/, AGENTS.md (puntos 2 y 8), sistema/version.md (1.9.4) · pendiente: probar las alarmas en Mac y Linux (lo hace solo la tarea del arranque); el arranque del dueño sigue sin empezar
+Ninguna todavía.

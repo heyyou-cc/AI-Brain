@@ -8,7 +8,7 @@ Cada dato lleva su marca (AGENTS.md, punto 6). Lo que él diga («háblame de us
 
 ## Trato
 
-De tú. [inferido: sus mensajes del 2026-11-19, todos de tú («¿podrías…?», «no te entendí»)]
+pendiente (de tú o de usted: sale de cómo escribe él; si lo pide con palabras, eso manda)
 
 ## Cómo llamarle
 
@@ -16,13 +16,7 @@ pendiente (el nombre o título con que firma o pide que le digan: si firma con u
 
 ## Cómo escribe él
 
-- Escribe como si platicara en voz alta: frases seguidas, con muletillas como «pues», «la verdad», «como tan», «entonces». No saluda ni usa emojis. [inferido: sus mensajes del 2026-11-19]
-- Explica primero lo que quiere y luego por qué, con sus palabras, sin términos técnicos. Repite la idea importante para que quede clara («de manera automática», dicho tres veces). [inferido: sus mensajes del 2026-11-19]
-- Cuando pide trabajo, lo dicta todo de corrido y va sumando con «Y…», «Y otra cosa…»; a veces aclara al final con «por así decirlo». Espera que se haga todo lo que dijo en ese mensaje. [inferido: sus mensajes del 2026-11-19]
-- Abre a veces con «oye», da su opinión con «me parece…» y aclara con «o sea». Cierra pidiendo que le avisen si hay dudas («Si tienes alguna duda… avísame»). [inferido: su mensaje del 2026-11-20]
-- Piensa en voz alta: arranca con «Sabes, bueno, más bien…», da un ejemplo concreto y cierra preguntando si se puede o no («¿sabes?»). Ahí quiere un sí o un no claro primero. [inferido: su mensaje del 2026-11-20]
-- A veces escribe muy corto («que es este repo?»), sin acentos ni signo de apertura. [inferido: su primer mensaje, 2026-11-19]
-- Cuando pregunta algo concreto, lo dice en dos frases bien puestas, con acentos y signos, y cierra con la pregunta directa y corta («¿Se perdió?»). Usa algunas palabras del oficio, como «repositorio» y «repo». [inferido: su mensaje del 2026-11-19]
+pendiente (su trato, el largo de sus mensajes, las palabras que repite, si saluda o usa emojis, cómo une las ideas; lo afina solo la alarma de la voz)
 
 ## Cómo piensa y explica
 
@@ -30,19 +24,15 @@ pendiente (cómo razona y explica: si usa comparaciones o ejemplos y de qué mun
 
 ## Qué tan largas quiere las respuestas
 
-Que se entiendan a la primera y se puedan imaginar: ideas sencillas, con ejemplos de la vida diaria, no listas técnicas. [confirmado 2026-11-19: «No te entendí mucho, la verdad. ¿Podrías simplificarlo a algo que no sea como tan técnico o que sea más fácil de visualizar?»]
+pendiente
 
 ## Muestras cortas de cómo escribe
 
-- «No te entendí mucho, la verdad.»
-- «¿Podrías simplificarlo a algo que no sea como tan técnico o que sea más fácil de visualizar?»
-- «Ya después de cierto tiempo, pues no importa.»
-- «Anteriormente tuve una sesión con Claude en este mismo repositorio, pero no la encuentro. ¿Se perdió?»
+pendiente (dos o tres frases cortas suyas, de trabajo, nada personal)
 
 ## Lo que no le gusta que le escriban
 
-- Respuestas técnicas: nombres de programas, siglas, rutas o palabras de programador. [confirmado 2026-11-19]
-- Que no se le hable como él habla: quiere que la forma de escribirle se parezca a la suya, sola, sin tener que pedirlo. [confirmado 2026-11-19]
+pendiente
 
 ## Historia
 
