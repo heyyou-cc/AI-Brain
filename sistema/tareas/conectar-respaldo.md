@@ -10,7 +10,7 @@ Tres reglas que no se rompen en ningún paso:
 
 ## Antes de todo · ¿ya quedó conectada?
 
-Compara `git remote get-url origin` con el renglón `remoto_permitido=` de `sistema/sincronizar.conf`, sin el usuario que vaya antes de `github.com`, sin `.git` al final y sin distinguir mayúsculas. Si coinciden y `GIT_TERMINAL_PROMPT=0 git ls-remote origin` entra sin pedir nada, la carpeta ya está conectada (por ejemplo, con el comando del wizard de heyyou): haz lo de «Al terminar» y borra este archivo sin preguntarle nada al dueño y sin seguir con las partes de abajo.
+Compara `git remote get-url origin` con el renglón `remoto_permitido=` de `sistema/sincronizar.conf`, sin el usuario que vaya antes de `github.com`, sin `.git` al final y sin distinguir mayúsculas. Si coinciden y `GCM_INTERACTIVE=never GIT_TERMINAL_PROMPT=0 git ls-remote origin` entra sin pedir nada (ni abrir ventanas), la carpeta ya está conectada (por ejemplo, con el comando del wizard de heyyou): haz lo de «Al terminar» y borra este archivo sin preguntarle nada al dueño y sin seguir con las partes de abajo.
 
 ## Parte 1 · Preparar la carpeta (sin preguntar)
 

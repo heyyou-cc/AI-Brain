@@ -2,8 +2,8 @@
 
 Para qué sirve: dice qué versión es esta carpeta y qué archivos son nuestros (heyyou los puede reemplazar en una versión nueva) y cuáles son del dueño (nunca se pisan). Quien ponga una versión nueva encima reemplaza solo lo nuestro.
 
-- Versión: 1.10.0
-- Fecha: 2026-11-23
+- Versión: 1.10.1
+- Fecha: 2026-11-24
 - Probada en: la 1.8, en Claude Code; la 1.9 a la 1.10 falta correrlas enteras. La herramienta de leer documentos se corrió en Windows (PowerShell 5.1 y Git Bash) con documentos de ejemplo, y las dos versiones dan la misma salida; en un Mac no se ha corrido. El extractor de exportaciones de claude.ai y ChatGPT (`-Exportacion`) se probó en PowerShell 5.1 con archivos de muestra, `.zip` y `.json`; la versión `.sh` se probó solo en su lógica, con Node en vez de `osascript`, y no se ha corrido en un Mac. Codex queda configurado según su documentación, sin correrlo.
 
 ## Nuestros: se pueden reemplazar en una versión nueva
@@ -33,6 +33,8 @@ Las que nacen con `sistema/rutinas/proponer-automatizacion.md` se apuntan aquí,
 Ninguna todavía.
 
 ## Historia de versiones
+
+- 1.10.1 · 2026-11-24 · La tarea del respaldo (`sistema/tareas/conectar-respaldo.md`) se cierra sola si la carpeta ya quedó conectada, por ejemplo con el comando del wizard de heyyou, y si el dueño tiene ese enlace lo manda a conectarlo desde ahí. La prueba de «ya quedó conectada» corre con `GCM_INTERACTIVE=never GIT_TERMINAL_PROMPT=0`, para que en Windows no abra la ventana de entrar a GitHub. No se probó en el banco.
 
 - 1.10.0 · 2026-11-23 · El arranque trabaja solo y se sincroniza solo, uno por renglón:
   - El arranque ya no pide permiso: saluda, dice qué va a hacer y empieza en ese mismo turno. `permiso` pasa a `directo` (los valores viejos siguen valiendo). Lo personal y los archivos de claves siguen sin abrirse.
