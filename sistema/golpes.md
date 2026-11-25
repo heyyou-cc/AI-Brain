@@ -2,7 +2,7 @@
 
 Para qué sirve: cada error tuyo que el dueño corrigió, con la regla que nació de él. El agente la lee antes de cada tarea para no repetirlo (AGENTS.md, punto 10). Se escribe en el mismo turno en que te corrige, antes de rehacer nada: no al final de la sesión ni «luego».
 
-Aquí solo van tus errores: un dato mal puesto, un paso que te saltaste, algo que dijiste sin comprobar, o repetir algo que ya te había corregido. Si corrige lo que hizo un empleado (un borrador, una cotización, una publicación), la corrección va a «Aprendizajes» de la ficha de ese empleado, no aquí. Si es cómo le hablas a él, va a `conocimiento/dueno/como-hablarle.md`.
+Aquí solo van tus errores: un dato mal puesto, un paso que te saltaste, algo que dijiste sin comprobar, o repetir algo que ya te había corregido. Si corrige lo que hizo una skill (un borrador, una cotización, una publicación), la corrección va a `skills/_aprendizajes.md`, no aquí. Si es cómo le hablas a él, va a `conocimiento/dueno/como-hablarle.md`.
 
 Forma: `- AAAA-MM-DD · qué pasó: <una frase> · regla: <qué se hace distinto desde hoy> · dónde quedó: <ruta de la regla> · veces: 1`. En ese mismo turno, la corrección suma también su línea a `conocimiento/dueno/correcciones.md`.
 

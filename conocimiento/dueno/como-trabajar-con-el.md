@@ -6,7 +6,7 @@ Forma de cada regla: `- <regla> · por qué: <lo que pasó o lo que dijo, en sus
 
 Ejemplo de forma, no una regla del dueño: `- Los reportes, en una sola hoja y con el total arriba · por qué: «no leo más de una hoja» · aplica a: reportes · desde: 2026-11-17`
 
-Si una regla nueva contradice a una vieja, la nueva la reemplaza y la vieja pasa a «Historia». Lo de «solo esta vez» no entra. Lo que vale solo para un cliente va a su ficha; lo que vale para una rutina, a la rutina; lo que corrige del trabajo de un empleado, a «Aprendizajes» de la ficha de ese empleado.
+Si una regla nueva contradice a una vieja, la nueva la reemplaza y la vieja pasa a «Historia». Lo de «solo esta vez» no entra. Lo que vale solo para un cliente va a su ficha; lo que vale para una rutina, a la rutina; lo que corrige del trabajo de una skill, a `skills/_aprendizajes.md`.
 
 ## Cómo quiere recibir el trabajo
 

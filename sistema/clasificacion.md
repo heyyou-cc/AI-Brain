@@ -2,7 +2,7 @@
 
 Con esta ficha decides si lo que leíste (un documento, un correo, un mensaje del dueño) entra al cerebro y en qué carpeta; léela entera cada vez que vayas a clasificar, antes del primer dato.
 
-Las rutas de las tablas están dentro de `conocimiento/`, salvo las que empiezan con `empleados/`, `entrada/` o `sistema/`. Ningún nombre lleva acentos ni espacios.
+Las rutas de las tablas están dentro de `conocimiento/`, salvo las que empiezan con `skills/`, `entrada/` o `sistema/`. Ningún nombre lleva acentos ni espacios. Lo que el dueño manda a la carpeta privada conserva la misma ruta dentro de ella (`_privado/conocimiento/<carpeta>/<nota>.md`).
 
 ## Paso 0 — Por el nombre, sin abrir
 
@@ -15,6 +15,8 @@ Mira la ruta completa. Basta una señal personal en una carpeta o en el nombre d
 | Claves: `.env` y `.env.*`, `.pem`, `.key`, `.p12`, `.pfx`, `.ppk`, `id_rsa`, `.kdbx`, `.1pux`; exportes de gestores de contraseñas (`passwords.csv`, «Chrome Passwords», «bitwarden_export»); la e.firma y el sello digital del SAT; cualquier nombre con contraseñas, passwords, claves, credenciales, tokens, secret o llaves. | No lo abres aunque sea del negocio. De una clave del negocio sigue la regla dura. |
 | Del negocio: su nombre o marca, ventas, precios, cotización, factura, inventario, pedidos, clientes, proveedores, catálogo, menú, nómina, contratos, obra, manual, procesos. | Lo abres y sigues al paso 1. |
 | Dudoso: nombres que no dicen nada (`Documento1`, `scan0003`, «Nueva carpeta», «Varios») o que sirven para las dos cosas (pagos, cuentas, impuestos, seguro, un nombre de pila). | Juntas la lista y, antes de abrir, preguntas en un solo mensaje, como dice la fase `dudosos` de `sistema/rutinas/arranque.md` (una sola pregunta en bloque): «¿Estos archivos son del negocio? Sí a todos · Ninguno · Te digo cuáles». Lo que no conteste no se abre. |
+
+Una carpeta llamada `_privado`, en la raíz o a cualquier nivel, es del dueño y de nadie más: no se abre, no se lista y no se cuenta, ni al inventariar ni al buscar. Solo se entra si él lo autoriza en el chat, cada vez y en cada sesión.
 
 Si el nombre dice «claves» pero parece catálogo («claves de producto», «claves SAT»), va a la pregunta en bloque; sin su «sí» no se abre.
 
@@ -72,7 +74,7 @@ Calificas cada documento, correo o mensaje. Si un mensaje del dueño mezcla tema
 | P09 | Productos | El catálogo: qué vende, todos sus precios y escalones, qué sale y qué deja más | producto o servicio · precio de venta · «el que más sale» · promoción | P05 el margen · P14 lo que cambia por día, mes o temporada · COT | `oferta/productos.md`; precios en `oferta/precios.md` | cosa |
 | P10 | Proveedores | A quién le compra: peso, tiempos reales, condiciones, fallas, otras opciones | «le compramos a» · crédito a días · «llegó tarde» · «no hay otro» | P11 quien le trae clientes · el de un programa va a P03 | `operacion/proveedores.md` | cosa |
 | P11 | Partners | Alianzas, referidores y distribuidores que traen clientes o venden por él | «nos recomienda» · comisión por cliente · distribuidor · convenio | P10 a quien le compra · P08 los que trae | `operacion/socios.md` | cosa |
-| P12 | Problemas | Los problemas urgentes: desde cuándo, cuánto cuestan, por qué siguen | «el problema es» · «desde agosto» · «nos está costando» | P17 la fuga que nadie ve · P14 lo que se repite sin doler · la cifra de lo que cuesta o entra va a `dinero/` y se enlaza | `rumbo/problemas.md` | juicio |
+| P12 | Problemas del negocio | Los problemas urgentes del negocio: desde cuándo, cuánto cuestan, por qué siguen | «el problema es» · «desde agosto» · «nos está costando» | P31 el reto del dueño como persona · P17 la fuga que nadie ve · P14 lo que se repite sin doler · la cifra de lo que cuesta o entra va a `dinero/` y se enlaza | `rumbo/problemas.md` | juicio |
 | P13 | Prioridades | Lo más importante en 90 días y cómo sabrá que salió bien | «lo que importa ahorita» · «de aquí a…» · meta cercana | P27 cómo planea · DUE lo que lo mueve a él | `rumbo/prioridades-90-dias.md` | juicio |
 | P14 | Patrones | Lo que se repite en ventas, clientes, equipo u operación; días de la semana, temporadas y ciclos, aunque traigan cifras o nombren un producto | «siempre que» · «cada diciembre» · «los lunes» · «el mejor día es» · temporada alta | P16 la métrica sin ciclo · P09 el producto sin ciclo | `rumbo/patrones.md` | juicio |
 | P15 | Predicciones | Lo que cree que pasará en su ramo en 12 meses: oportunidad, amenaza, cambio | «el año que entra» · competidor nuevo · ley que viene | P30 lo que podría ser · P12 lo que ya duele | `rumbo/predicciones.md` | juicio |
@@ -80,7 +82,7 @@ Calificas cada documento, correo o mensaje. Si un mensaje del dueño mezcla tema
 | P17 | Pérdidas | Dinero que se va sin que se note: inventario parado, merma, ventas caídas | merma · «se echa a perder» · «perdimos la venta porque» | P12 el problema ya nombrado · P29 por qué se van | `dinero/fugas.md` | juicio |
 | P18 | Poder | Quién decide de verdad (también lo que decide el dueño), quién influye en él, quién puede frenar un cambio | «sin el visto bueno de» · «la que manda es» · «le hacemos caso a» | P01 qué hace cada quien · DEC | `equipo/quien-decide.md` | juicio |
 | P19 | Propósito | Por qué existe más allá del dinero y a quién le faltaría si cerrara | «existimos para» · «lo que nos importa» · «si cerramos, se quedan sin» | P22 cómo lo ven · NEG la historia | `negocio/proposito.md` | juicio |
-| P20 | Puestos artificiales | Un trabajo que podría hacer la IA: qué cubre, qué pide antes, qué resistencia habría | «lo podría hacer un bot» · «si alguien contestara» · tarea de mucho volumen | P03 la herramienta de hoy · EQU la tarea tal cual | `empleados/_indice.md`, sección «Ideas de puestos» | cosa |
+| P20 | Pericias (skills) | Un trabajo que la IA podría hacer o ya hace con una skill: qué cubre, qué pide antes, qué resistencia habría, y qué skills le sirven al negocio y cuáles usa | «lo podría hacer un bot» · «si alguien contestara» · tarea de mucho volumen · «esto lo hace Claude con la skill de…» | P03 la herramienta de hoy · EQU la tarea tal cual | `skills/_indice.md`, sección «Ideas de skills» | cosa |
 | P21 | Propiedad intelectual | Lo que solo este negocio sabe o tiene: receta, método, formato, marca registrada | «nuestra receta» · «el método de» · «nadie más lo hace así» | P02 el proceso común · P24 la prueba | `negocio/propiedad-intelectual.md` | cosa |
 | P22 | Posicionamiento | Cómo lo ve el mercado hoy contra cómo quiere que lo vean en tres años | «queremos que nos vean como» · «nos comparan con» · «nos conocen por» | P25 la opinión de un grupo · P06 la campaña | `negocio/posicionamiento.md` | juicio |
 | P23 | Promesas | Lo que promete, dicho o callado; cuál cumple y cuál falla | «te lo entregamos en» · «garantizado» · «decimos que sí aunque» | REG la regla con condición · P04 qué hacer si falla | `negocio/promesas.md` | cosa |
@@ -91,12 +93,13 @@ Calificas cada documento, correo o mensaje. Si un mensaje del dueño mezcla tema
 | P28 | Postventa | Lo que pasa después de que el cliente recibe: seguimiento, quién, cuándo, recompra; o que no pasa nada | «le llamamos a los tres días» · recordatorio · encuesta | P29 cuánto duran · P02 la venta | `clientes/postventa.md` | cosa |
 | P29 | Permanencia | Cuánto se quedan los clientes, por qué se van, cuánto cuesta reponerlos | «llevan años con nosotros» · «se fue con» · «dejan de venir» | P28 lo que se hace después · P17 | `clientes/permanencia.md` | juicio |
 | P30 | Potencial | Lo que podría ser en 12 a 24 meses si resuelve sus problemas; el mercado sin tocar | «podríamos llegar a» · «si resolviéramos» · «nadie atiende a» | P15 lo que pasará en el ramo · P13 | `rumbo/potencial.md` | juicio |
+| P31 | Problemas del dueño | Los retos, obstáculos y problemas que el dueño (o el alumno) tiene hoy como persona que dirige o aprende: tiempo, delegar, dominar la IA, sentirse rebasado, vender | «no me da tiempo» · «no sé delegar» · «no le entiendo a la IA» · «me siento rebasado» · «todo pasa por mí» · pide a la IA ayuda con lo mismo de principiante | P12 los problemas del negocio · DUE lo que lo mueve y cómo decide · P26 el tiempo que pierde el equipo · su vida personal, que no se guarda | `dueno/problemas.md` | juicio |
 
 Fuera de las P, estas filas se califican igual que una P y compiten con ellas:
 
 | Fila | Qué es | Señales | No confundir con | Nota | Tipo |
 | --- | --- | --- | --- | --- | --- |
-| DUE | El dueño como quien decide (sección 3): rol, su día, qué lo mueve, sus miedos de empresario, cómo decide, cómo hablarle | habla de sí como jefe · «yo decido» · «me da miedo que» · su horario | P13 lo que quiere para el negocio · P18 | `dueno/` (`rol`, `su-dia`, `que-lo-mueve`, `como-decide`, `como-hablarle`) | cosa |
+| DUE | El dueño como quien decide (sección 3): rol, su día, qué lo mueve, sus miedos de empresario, cómo decide, cómo hablarle | habla de sí como jefe · «yo decido» · «me da miedo que» · su horario | P13 lo que quiere para el negocio · P18 · P31 el reto que hoy le pesa | `dueno/` (`rol`, `su-dia`, `que-lo-mueve`, `como-decide`, `como-hablarle`) | cosa |
 | REG | Reglas que se cumplen o no (sección 15): precio, descuento, entrega, pago, garantía, tono, cuándo llamar al dueño, lo que nunca se dice | «nunca» · «siempre» · «solo con permiso de» · cifra o plazo exacto | P04 la costumbre sin cifra · P23 la promesa | `reglas-del-negocio.md` | cosa |
 | NEG | Identidad e historia (secciones 1 y 2): qué es, dónde está y qué ciudades o zonas cubre, cómo nació, cómo gana dinero, lo que no es, su voz | «empezamos en» · «no somos» · «atendemos en…» · fuentes de ingreso · frases de la marca | P19 el porqué · P22 | `negocio/` (`identidad`, `historia`, `voz`) | cosa |
 | CLI | Clientes (secciones 4, 9 y 10): a quién le vende, cliente ideal, segmentos, recorrido, preguntas y quejas de siempre, objeciones con respuesta, cliente clave | perfil de quien compra · «siempre nos preguntan» · «siempre se quejan de» · objeción y respuesta · un cliente grande | P08 · P25 la imagen · P29 | `clientes/` (`cliente-ideal`, `preguntas`, `objeciones`, `<cliente>`) | cosa |
@@ -128,14 +131,15 @@ Primero mira los «Destinos fijos» de abajo: si el dato cae en uno, ese destino
 - **Lo que los clientes piden y el negocio no ofrece** (un producto, una talla, un servicio, una zona) es oportunidad: va a `rumbo/potencial.md` (P30), con cuántas veces lo pidieron y de dónde salió.
 - **La voz de la marca** (`negocio/voz.md`, NEG) se arma con textos reales que el negocio ya mandó a sus clientes, de 5 a 20 (publicaciones, mensajes o correos que funcionaron, su página web), no con lo que el dueño cree de sí. Apunta solo los rasgos vistos (si trata a los clientes de tú o de usted, si usa emojis, cómo saluda y cómo firma, si escribe distinto en WhatsApp que en redes), lo prohibido solo si se vio, y si dos fuentes no coinciden escribe la diferencia en vez de sacar un promedio.
 - **Un patrón por día de la semana, mes o temporada** (el mejor día, los sábados de quincena, cada diciembre) va a `rumbo/patrones.md` (P14) aunque traiga cifras o nombre un producto; la nota del producto o de las métricas lo enlaza.
-- **Una tarea que alguien hace a mano cada semana:** lo que hace va a `equipo/repetitivo.md` (EQU) y, además, un renglón en «Ideas de puestos» de `empleados/_indice.md`, con el puesto de IA que más ayudaría. Ahí va también la idea de puesto que más le serviría al negocio, aunque nadie la haya dicho, marcada `[inferido: …]`. Si la pide él o tiene fecha fija, también `sistema/ideas-para-automatizar.md`.
+- **Una tarea que alguien hace a mano cada semana:** lo que hace va a `equipo/repetitivo.md` (EQU) y, además, un renglón en «Ideas de skills» de `skills/_indice.md`, con la skill que más ayudaría. Ahí va también la idea de skill que más le serviría al negocio, aunque nadie la haya dicho, marcada `[inferido: …]`. Si la pide él o tiene fecha fija, también `sistema/ideas-para-automatizar.md`.
 - **Quién decide:** `equipo/quien-decide.md` lleva cada tipo de decisión con quien la toma, también las que toma el dueño («precios: el dueño · compras chicas: la encargada»).
 - **Una cifra con su reparto** se guarda entera, en un renglón: el total y sus partes. Ni el total sin sus partes ni las partes sin el total.
 - **Una cifra que sale de datos crudos** (las ventas de cada semana o de cada día) se saca de ellos y dice la cuenta: «promedio de 12 semanas de `ventas.xlsx`». Si otro documento da una distinta (una presentación, un resumen), se guardan las dos en el mismo renglón, cada una con su fuente, y se le pregunta al dueño cuál vale.
 - **Lo que un documento ya define** (qué es un buen mes, una meta, una regla) es dato con su marca: no queda pendiente ni se pregunta como si faltara; si acaso, se confirma.
 - **Un dato que sirve a dos cajones** (las ventas que vienen de un canal: cuánto deja va a dinero y cómo se atiende ese canal, a operación) se apunta en los dos, o vive en uno y el otro lleva un renglón con su enlace. Nunca queda solo en uno sin que el otro lo nombre.
 - **El posicionamiento y el precio de entrada** (cómo se presenta frente a otros, desde cuánto se le compra) van al cajón del negocio, en `negocio/` (el precio de entrada enlaza la lista completa de `oferta/`, que sigue siendo donde viven los precios); **quién compra y si vuelve a comprar** van a `clientes/`. Si una misma frase trae las dos cosas, cada parte va a su cajón.
-- **El DNA no es destino:** todo dato vive en `conocimiento/`; el DNA solo lo copia, con su enlace.
+- **Lo que el dueño manda a privado** (lo sensible si algún día comparte su cerebro: salud, familia, deudas, sueldos de personas, pleitos, problemas personales, datos de clientes con nombre y teléfono, márgenes, lo de la P31) se mueve con la misma ruta a `_privado/conocimiento/<carpeta>/<nota>.md`. En la nota original queda una línea «(hay datos en privado)» y nunca el dato; la fila de esa P en `conocimiento/_30p.md` y en `conocimiento/_mapa.md` dice «hay datos en privado». Lo nuevo que entre del mismo tipo, después de que dijo que sí, va directo allá. Solo se mueve con su «sí».
+- **El DNA no es destino:** todo dato vive en `conocimiento/`; el DNA solo lo copia, con su enlace. Lo que está en privado no sale en el DNA.
 
 ## Paso 4 — La marca de certeza
 
@@ -154,11 +158,12 @@ Primero mira los «Destinos fijos» de abajo: si el dato cae en uno, ese destino
 
 ## Paso 5 — La frontera del dueño
 
-- `dueno/` guarda lo de la fila DUE: al dueño como quien decide, no como persona.
-- Su rol y su horario pueden salir de un documento del negocio. Qué lo mueve, sus miedos y cómo decide entran solo de lo que él te cuente en la plática, nunca de sus archivos ni de sus correos. De sus conversaciones anteriores con la IA, a `dueno/` solo entra cómo escribe y cómo corrige a la IA (`dueno/como-hablarle.md` o `dueno/como-trabajar-con-el.md`, según el punto 10 de AGENTS.md). Lo demás de las conversaciones se clasifica como cualquier dato, como dice la fase `conversaciones` de `sistema/rutinas/arranque.md`.
+- `dueno/` guarda lo de la fila DUE y la P31: al dueño como quien decide y como quien aprende a dirigir, no como persona.
+- Su rol y su horario pueden salir de un documento del negocio. Qué lo mueve, sus miedos y cómo decide entran solo de lo que él te cuente en la plática, nunca de sus archivos ni de sus correos. De sus conversaciones anteriores con la IA, a `dueno/` solo entra cómo escribe y cómo corrige a la IA (`dueno/como-hablarle.md` o `dueno/como-trabajar-con-el.md`, según el punto 10 de AGENTS.md) y las señales de la P31. Lo demás de las conversaciones se clasifica como cualquier dato, como dice la fase `conversaciones` de `sistema/rutinas/arranque.md`.
+- **La P31 sí se busca en lo que se nota.** Un reto del dueño como persona que dirige o aprende (no tiene tiempo, no sabe delegar, no domina la IA, se siente rebasado, no sabe vender) puede salir de sus conversaciones con la IA (lo que pide de principiante, lo que repite, «no me da tiempo»), de su correo enviado o de cómo se expresa en la plática. Si no lo dijo él con esas palabras, va como `[inferido: de qué]` y no cuenta como lleno hasta que lo confirme. Solo retos de trabajo y de aprendizaje: lo de su familia, su salud o su dinero personal no entra aunque lo cuente (lo de abajo).
 - De su vida personal guardas solo lo que toca al trabajo («los martes no está»), nunca el porqué: ni familia, ni salud, ni dinero personal. Lo que no guardas tampoco lo repites en el aviso de «Guardé».
 
-## Treinta ejemplos resueltos
+## Treinta y un ejemplos resueltos
 
 Negocios: TO, taller mecánico Ochoa (Puebla) · LE, panadería La Espiga (Querétaro) · RU, despacho contable Ruelas (Guadalajara) · CA, tienda de ropa Cardón (Hermosillo) · PE, constructora Peña Alta (León). «Chat» es lo que dice el dueño; un nombre de archivo, un documento de su carpeta. La calificación de negocio lleva las señales que sumó.
 
@@ -183,7 +188,7 @@ Negocios: TO, taller mecánico Ochoa (Puebla) · LE, panadería La Espiga (Quer�
 | P17 | TO · `inventario.xlsx` | «$38,000 en piezas de modelos que ya casi no entran; más de un año sin moverse» | 70 · N4 N5 N10 | P17 (85) | — | `dinero/fugas.md` | Dinero parado; P05 queda en 48 |
 | P18 | RU · chat | «Toño no es jefe, pero si dice que un cliente nuevo no conviene, Karla y yo le hacemos caso» | 95 · N2 N3 N6 | P18 (88) | P01 (64) | `equipo/quien-decide.md` | Poder fuera del organigrama |
 | P19 | LE · chat | «Abrimos para que la colonia tuviera pan de leña a precio de barrio; si cerramos, los de la mañana se quedan sin pan» | 80 · N2 N4 | P19 (92) | NEG (63) | `negocio/proposito.md` | Por qué existe y a quién le faltaría |
-| P20 | TO · chat | «Me paso la tarde contestando por WhatsApp si ya está el carro; eso lo podría contestar un bot» | 95 · N2 N3 N8 | P20 (84) | DUE (65), EQU (63) | `empleados/_indice.md`, sección «Ideas de puestos» | Tarea de mucho volumen para la IA |
+| P20 | TO · chat | «Me paso la tarde contestando por WhatsApp si ya está el carro; eso lo podría contestar un bot» | 95 · N2 N3 N8 | P20 (84) | DUE (65), EQU (63) | `skills/_indice.md`, sección «Ideas de skills» | Tarea de mucho volumen para la IA |
 | P21 | LE · chat | «La masa madre tiene 40 años y la receta del pan de pulque solo la sabemos Chela y yo» | 95 · N2 N4 N6 | P21 (90) | EQU (70) | `negocio/propiedad-intelectual.md` | Lo que solo este negocio tiene |
 | P22 | CA · chat | «Hoy nos ven como la tienda cara del centro; en tres años quiero que digan que vestimos a Hermosillo» | 75 · N2 N9 | P22 (88) | P25 (70) | `negocio/posicionamiento.md` | Hoy contra tres años; dos juicios |
 | P23 | RU · web, su página | «Contestamos tus dudas fiscales el mismo día hábil» | 85 · N1 N4 N5 N8 (la página entera) | P23 (90) | — | `negocio/promesas.md` | Promesa sin condición: REG en 55 |
@@ -194,6 +199,7 @@ Negocios: TO, taller mecánico Ochoa (Puebla) · LE, panadería La Espiga (Quer�
 | P28 | TO · chat | «A los tres días del servicio Memo le marca al cliente para ver cómo sintió el carro» | 100 · N2 N3 N6 N8 | P28 (94) | P02 (62) | `clientes/postventa.md` | Lo que pasa después de entregar |
 | P29 | RU · chat | «Los clientes nos duran unos seis años; los que se van, casi siempre es porque otro cobra menos» | 95 · N2 N3 N9 | P29 (92) | — | `clientes/permanencia.md` | Cuánto duran y por qué se van |
 | P30 | PE · chat | «Si arreglamos lo de los albañiles, con el terreno de Silao haríamos 150 casas en dos años, el triple de hoy» | 95 · N2 N4 N9 | P30 (90) | — | `rumbo/potencial.md` | P12 queda en 60: no se enlaza |
+| P31 | PE · chat | «No me da tiempo ni de pensar: todo pasa por mí, y no sé delegar sin que se me caiga la obra» | 100 · N2 N6 N8 | P31 (92) | DUE (64), P26 (52) | `dueno/problemas.md` | El reto es del dueño como persona, no del negocio: P12 queda en 48 |
 
 ## Nueve casos difíciles
 

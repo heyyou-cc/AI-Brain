@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "motor-de-agentes": {
+      "command": "node",
+      "args": ["sistema/mcp/motor-de-agentes/arranque.mjs"]
+    }
+  }
+}

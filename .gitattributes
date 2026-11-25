@@ -9,3 +9,7 @@ sistema/exclusiones.md merge=union
 sistema/ideas-para-automatizar.md merge=union
 conocimiento/dueno/correcciones.md merge=union
 fuentes/_registro.md merge=union
+# Los scripts siempre terminan los renglones como Mac y Linux (LF), sino fallan; los de PowerShell, como Windows (CRLF).
+*.sh text eol=lf
+*.mjs text eol=lf
+*.ps1 text eol=crlf

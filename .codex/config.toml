@@ -3,3 +3,13 @@
 # No va aquí nada más: las reglas viven en AGENTS.md (ver LEEME.md, «Codex»).
 sandbox_mode = "workspace-write"
 approval_policy = "on-request"
+
+# Motor de agentes de heyyou (configura y publica los agentes del Hub desde el chat).
+# Su llave va en la variable HEYYOU_HUB_KEY (ver LEEME.md, «Motor de agentes de heyyou»).
+# Por ahora corre local (node la arranca). Cuando heyyou publique el motor en línea, cambia las dos
+# líneas de command/args por estas, con la misma llave en HEYYOU_HUB_KEY:
+#   url = "https://<direccion-que-te-de-heyyou>/mcp"
+#   env_http_headers = { "x-api-key" = "HEYYOU_HUB_KEY" }
+[mcp_servers.motor-de-agentes]
+command = "node"
+args = ["sistema/mcp/motor-de-agentes/arranque.mjs"]

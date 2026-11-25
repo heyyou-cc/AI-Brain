@@ -14,7 +14,7 @@ Forma, la más nueva arriba: `- AAAA-MM-DD · <corrección, cambio o costumbre> 
 
 **Pasos, en el mismo turno en que guardas la corrección, el cambio o la costumbre en su nota:**
 
-1. **Busca la palabra vieja.** Si reemplaza algo (una cifra anterior, la persona que antes decidía, un nombre de servicio), busca ese valor viejo, tal como estaba escrito, en todo `conocimiento/`, en las fichas de `empleados/` y en el DNA vigente, y cambia cada aparición en este turno. Lo que deba quedarse como historia va a la «Historia» de su nota, marcado como historia, no suelto en el texto.
+1. **Busca la palabra vieja.** Si reemplaza algo (una cifra anterior, la persona que antes decidía, un nombre de servicio), busca ese valor viejo, tal como estaba escrito, en todo `conocimiento/`, en `skills/` y en el DNA vigente, y cambia cada aparición en este turno. Lo que deba quedarse como historia va a la «Historia» de su nota, marcado como historia, no suelto en el texto.
 2. **Si fue un error tuyo** (inventaste, no guardaste, te saltaste una regla escrita, no un dato del negocio), escríbelo también en `sistema/golpes.md` en este turno, y «quedó en» nombra las dos rutas.
 3. **Escribe la línea aquí**, con su «DNA: sí» o «DNA: no». Si la cosa cambia de sitio o la reemplaza otra, cambia su línea; no la dupliques.
 4. **Si es «DNA: sí», saca en este mismo turno la versión nueva del DNA** con `sistema/rutinas/dna-del-negocio.md`, aunque sea una sola línea. No se deja para el cierre ni para el repaso.

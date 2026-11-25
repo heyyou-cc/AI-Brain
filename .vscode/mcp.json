@@ -1,0 +1,9 @@
+{
+  "servers": {
+    "motor-de-agentes": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["${workspaceFolder}/sistema/mcp/motor-de-agentes/arranque.mjs"]
+    }
+  }
+}

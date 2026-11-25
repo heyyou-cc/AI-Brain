@@ -34,7 +34,7 @@ cp "$base/.gitattributes" .
 printf 'sistema/alarmas/sincronizar.log\nsistema/alarmas/.traidos\n' > .gitignore
 printf '# comentario\nremoto_permitido=%s\n' "$w/remoto.git" > sistema/sincronizar.conf
 printf '# Precios\n\n- Corte: 150\n\n## Historia\n\n' > conocimiento/precios.md
-printf '# Estado\n\n- fase_arranque: aviso\n' > sistema/estado.md
+printf '# Estado\n\n- fase_arranque: aviso\n- pregunta_privado: hecha\n' > sistema/estado.md
 printf '# Bitácora\n\n## Líneas\n\n' > sistema/bitacora.md
 printf 'producto,precio\ncorte,150\n' > conocimiento/lista.csv
 git add -A && git $quien commit -q -m inicio && git branch -M main && git push -q "$t/remoto.git" main
@@ -201,6 +201,121 @@ git -C "$t/a" remote remove origin
 printf 'remoto_permitido=\n' > "$t/a/sistema/sincronizar.conf"
 sincroniza a subir ya > /dev/null
 espera "sin origin ni dirección escrita, tampoco" "$head_antes" "$(git -C "$t/a" rev-parse HEAD)"
+
+echo "Carpetas privadas (_privado) no se suben:"
+# Un cerebro aparte, con el .gitignore de verdad y su propio remoto.
+git init -q --bare "$t/remoto-p.git"
+git --git-dir="$t/remoto-p.git" symbolic-ref HEAD refs/heads/main
+git -c init.defaultBranch=main init -q "$t/p"
+cd "$t/p" || exit 1
+git config user.name Prueba; git config user.email p@ejemplo
+mkdir -p sistema/alarmas conocimiento
+cp "$base/.gitignore" .gitignore
+printf 'remoto_permitido=%s\n' "$w/remoto-p.git" > sistema/sincronizar.conf
+printf '# Nota\n' > conocimiento/nota.md
+git add -A && git commit -q -m inicio && git branch -M main && git remote add origin "$t/remoto-p.git" && git push -q -u origin main
+mkdir -p _privado conocimiento/clientes/_privado/hondo
+printf 'secreto\n' > _privado/banco.md
+printf 'secreto\n' > _privado/hondo.txt
+printf 'Aqui el dueño guarda lo que no quiere que nadie lea.\n' > _privado/_leeme.md
+printf 'secreto\n' > conocimiento/clientes/_privado/contrato.md
+printf 'secreto\n' > conocimiento/clientes/_privado/hondo/x.md
+printf 'normal\n' > conocimiento/clientes/ficha.md
+cd "$base" || exit 1
+espera "git ignora un archivo de _privado" si "$(git -C "$t/p" check-ignore -q _privado/banco.md && echo si || echo no)"
+espera "git ignora _privado de una subcarpeta" si "$(git -C "$t/p" check-ignore -q conocimiento/clientes/_privado/contrato.md && echo si || echo no)"
+espera "git ignora lo que está más hondo" si "$(git -C "$t/p" check-ignore -q conocimiento/clientes/_privado/hondo/x.md && echo si || echo no)"
+espera "el _leeme.md de _privado no se ignora" no "$(git -C "$t/p" check-ignore -q _privado/_leeme.md && echo si || echo no)"
+sincroniza p subir ya > /dev/null
+subidos=$(git -C "$t/p" ls-tree -r --name-only HEAD)
+espera "sincronizar sube la ficha normal" si "$(printf '%s\n' "$subidos" | grep -qx 'conocimiento/clientes/ficha.md' && echo si || echo no)"
+espera "sincronizar sube el _leeme.md de _privado" si "$(printf '%s\n' "$subidos" | grep -qx '_privado/_leeme.md' && echo si || echo no)"
+espera "sincronizar no sube nada más de _privado" 0 "$(printf '%s\n' "$subidos" | grep '_privado/' | grep -vc '^_privado/_leeme.md$')"
+espera "el remoto tampoco lo tiene" 0 "$(git --git-dir="$t/remoto-p.git" ls-tree -r --name-only main | grep '_privado/' | grep -vc '^_privado/_leeme.md$')"
+
+echo "Carpetas privadas con git mv, ya seguidas de una versión vieja y con mayúsculas:"
+# git mv hacia la carpeta privada: lo que ya estaba subido no debe seguir viajando en el siguiente commit.
+mkdir -p "$t/p/_privado/conocimiento"
+printf 'cliente con telefono\n' > "$t/p/conocimiento/clientes/ficha2.md"
+sincroniza p subir ya > /dev/null
+espera "la ficha normal sube antes de moverla" si "$(git --git-dir="$t/remoto-p.git" cat-file -e main:conocimiento/clientes/ficha2.md 2>/dev/null && echo si || echo no)"
+git -C "$t/p" mv conocimiento/clientes/ficha2.md _privado/conocimiento/ficha2.md
+sincroniza p subir ya > /dev/null
+espera "tras git mv, el remoto ya no la tiene en la ruta vieja" no "$(git --git-dir="$t/remoto-p.git" cat-file -e main:conocimiento/clientes/ficha2.md 2>/dev/null && echo si || echo no)"
+espera "tras git mv, el remoto no la tiene en la carpeta privada" no "$(git --git-dir="$t/remoto-p.git" cat-file -e main:_privado/conocimiento/ficha2.md 2>/dev/null && echo si || echo no)"
+espera "tras git mv, git ya no la sigue" 0 "$(git -C "$t/p" ls-files | grep -c 'ficha2')"
+espera "tras git mv, el archivo sigue en el disco" si "$([ -f "$t/p/_privado/conocimiento/ficha2.md" ] && echo si || echo no)"
+espera "tras git mv, queda sin nada pendiente" "" "$(git -C "$t/p" status --porcelain)"
+# Una carpeta privada que ya estaba seguida desde una versión vieja (con mayúscula inicial).
+mkdir -p "$t/p/conocimiento/viejos/_Privado"
+printf 'hondo\n' > "$t/p/conocimiento/viejos/_Privado/viejo.md"
+printf 'explicacion\n' > "$t/p/conocimiento/viejos/_Privado/_leeme.md"
+git -C "$t/p" add -f conocimiento/viejos/_Privado/viejo.md conocimiento/viejos/_Privado/_leeme.md
+git -C "$t/p" commit -q -m "version vieja" && git -C "$t/p" push -q origin main
+espera "(preparación) la versión vieja sí había subido el archivo" si "$(git --git-dir="$t/remoto-p.git" cat-file -e main:conocimiento/viejos/_Privado/viejo.md 2>/dev/null && echo si || echo no)"
+sincroniza p subir ya > /dev/null
+espera "una carpeta privada ya seguida se deja de seguir" 0 "$(git -C "$t/p" ls-files | grep -c 'viejo.md')"
+espera "el remoto deja de tener el archivo en su punta" no "$(git --git-dir="$t/remoto-p.git" cat-file -e main:conocimiento/viejos/_Privado/viejo.md 2>/dev/null && echo si || echo no)"
+espera "su _leeme.md sí se queda" si "$(git --git-dir="$t/remoto-p.git" cat-file -e main:conocimiento/viejos/_Privado/_leeme.md 2>/dev/null && echo si || echo no)"
+espera "el archivo no se borró del disco" si "$([ -f "$t/p/conocimiento/viejos/_Privado/viejo.md" ] && echo si || echo no)"
+espera "lo apunta en sincronizar.log" si "$(si grep -q 'dejé de seguir un archivo de una carpeta privada' "$t/p/sistema/alarmas/sincronizar.log")"
+# Mayúsculas en carpetas nuevas.
+mkdir -p "$t/p/conocimiento/otros/_Privado" "$t/p/_PRIVADO"
+printf 'x\n' > "$t/p/conocimiento/otros/_Privado/n.md"
+printf 'x\n' > "$t/p/_PRIVADO/m.md"
+printf 'explicacion\n' > "$t/p/_PRIVADO/_leeme.md"
+espera "git ignora _Privado" si "$(git -C "$t/p" check-ignore -q conocimiento/otros/_Privado/n.md && echo si || echo no)"
+espera "git ignora _PRIVADO" si "$(git -C "$t/p" check-ignore -q _PRIVADO/m.md && echo si || echo no)"
+espera "el _leeme.md de _PRIVADO no se ignora" no "$(git -C "$t/p" check-ignore -q _PRIVADO/_leeme.md && echo si || echo no)"
+sincroniza p subir ya > /dev/null
+espera "no sube nada de _Privado ni _PRIVADO, salvo su _leeme.md" 0 "$(git --git-dir="$t/remoto-p.git" ls-tree -r --name-only main | grep -i '_privado/' | grep -iv '/_leeme.md$' | grep -c .)"
+
+echo "Avisos en Copilot (camelCase, sin hook_event_name):"
+mkdir -p "$t/p/sistema/estilo"
+aviso_c() { printf 'Sincronización del cerebro: aviso de prueba\n' > "$t/p/.git/sincronizar-avisos"; }
+voz_c() { printf 'Recordatorio del cerebro: voz de prueba\n' > "$t/p/sistema/estilo/.tmp-copilot"; }
+aviso_c; voz_c
+sc1=$(sincroniza p bajar '' '{"sessionId":"c1","timestamp":1,"cwd":"/x","prompt":"hola"}')
+espera "userPromptSubmitted: no imprime nada (Copilot lo descarta)" "" "$sc1"
+espera "userPromptSubmitted: el aviso se queda esperando" si "$([ -s "$t/p/.git/sincronizar-avisos" ] && echo si || echo no)"
+espera "userPromptSubmitted: la voz se queda esperando" si "$([ -s "$t/p/sistema/estilo/.tmp-copilot" ] && echo si || echo no)"
+sc2=$(sincroniza p bajar '' '{"sessionId":"c1","timestamp":1,"cwd":"/x","source":"new"}')
+espera "sessionStart: entrega el aviso como additionalContext" si "$(case "$sc2" in '{"additionalContext":"'*"aviso de prueba"*"voz de prueba"*) echo si;; *) echo no;; esac)"
+espera "sessionStart: ya no queda el aviso ni la voz" "" "$([ -s "$t/p/.git/sincronizar-avisos" ] && echo aviso; [ -s "$t/p/sistema/estilo/.tmp-copilot" ] && echo voz)"
+aviso_c; voz_c
+sc3=$(sincroniza p subir '' '{"sessionId":"c1","timestamp":1,"cwd":"/x","toolName":"edit","toolArgs":"{}"}')
+espera "postToolUse: entrega aviso y voz como additionalContext" si "$(case "$sc3" in '{"additionalContext":"'*"aviso de prueba"*"voz de prueba"*) echo si;; *) echo no;; esac)"
+aviso_c; voz_c
+sc4=$(sincroniza p subir ya '{"sessionId":"c1","timestamp":1,"cwd":"/x","stopReason":"end_turn"}')
+espera "agentStop: frena con el aviso como reason" si "$(case "$sc4" in '{"decision":"block","reason":"'*"aviso de prueba"*) echo si;; *) echo no;; esac)"
+espera "agentStop: no gasta la voz (va en el siguiente evento)" si "$([ -s "$t/p/sistema/estilo/.tmp-copilot" ] && echo si || echo no)"
+rm -f "$t/p/sistema/estilo/.tmp-copilot"
+
+echo "Primero la pregunta de privacidad (sin respuesta, no se guarda ni se sube):"
+printf '# Estado\n\n- fase_arranque: cierre\n- pregunta_privado: pendiente\n' > "$t/p/sistema/estado.md"
+head_p=$(git -C "$t/p" rev-parse HEAD)
+remoto_p=$(git --git-dir="$t/remoto-p.git" rev-parse main)
+printf 'dato sensible aun sin decidir\n' > "$t/p/conocimiento/pendiente-privado.md"
+sv1=$(sincroniza p bajar '' '{"hook_event_name":"SessionStart","session_id":"sp1"}')
+sincroniza p subir ya '{"hook_event_name":"Stop","stop_hook_active":false}' > /dev/null
+espera "con pregunta_privado pendiente no hace commit" "$head_p" "$(git -C "$t/p" rev-parse HEAD)"
+espera "con pregunta_privado pendiente el remoto no cambia" "$remoto_p" "$(git --git-dir="$t/remoto-p.git" rev-parse main)"
+espera "con pregunta_privado pendiente no prepara nada" "" "$(git -C "$t/p" diff --cached --name-only)"
+espera "avisa que está en pausa" si "$(case "$sv1" in *"está en pausa"*"pregunta de privacidad"*) echo si;; *) echo no;; esac)"
+espera "el aviso va una vez por sesión" "" "$(sincroniza p bajar '' '{"hook_event_name":"UserPromptSubmit","session_id":"sp1"}')"
+printf '# Estado\n\n- fase_arranque: cierre\n- pregunta_privado:\n' > "$t/p/sistema/estado.md"
+sincroniza p subir ya > /dev/null
+espera "con pregunta_privado vacía tampoco sube" "$remoto_p" "$(git --git-dir="$t/remoto-p.git" rev-parse main)"
+printf '# Estado\n\n- fase_arranque: sin-empezar\n- pregunta_privado:\n' > "$t/p/sistema/estado.md"
+sincroniza p subir ya > /dev/null
+espera "con el arranque sin empezar sí sincroniza" "$(git -C "$t/p" rev-parse HEAD)" "$(git --git-dir="$t/remoto-p.git" rev-parse main)"
+printf '# Estado\n\n- fase_arranque: listo\n- pregunta_privado: pendiente\n' > "$t/p/sistema/estado.md"
+printf 'otro\n' >> "$t/p/conocimiento/pendiente-privado.md"
+sincroniza p subir ya > /dev/null
+espera "arranque listo y pregunta pendiente: se pausa" no "$(git --git-dir="$t/remoto-p.git" show main:conocimiento/pendiente-privado.md 2>/dev/null | grep -q otro && echo si || echo no)"
+printf '# Estado\n\n- fase_arranque: listo\n- pregunta_privado: hecha\n' > "$t/p/sistema/estado.md"
+sincroniza p subir ya > /dev/null
+espera "al contestar la pregunta, sincroniza" "$(git -C "$t/p" rev-parse HEAD)" "$(git --git-dir="$t/remoto-p.git" rev-parse main)"
 
 echo "Apagada con CEREBRO_SINCRONIZAR=0:"
 printf 'z\n' > "$t/a/conocimiento/apagada.md"

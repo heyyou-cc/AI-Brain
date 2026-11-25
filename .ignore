@@ -1,0 +1,2 @@
+# Las búsquedas (Grep, Glob, ripgrep) no entran a las carpetas privadas del dueño.
+_[Pp][Rr][Ii][Vv][Aa][Dd][Oo]/

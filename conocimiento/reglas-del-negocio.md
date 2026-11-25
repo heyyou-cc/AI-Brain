@@ -1,6 +1,6 @@
 # Reglas del negocio
 
-Para qué sirve: las reglas que el negocio cumple o no cumple, sin lugar a dudas (sección 15 del DNA). Las usan el agente y los empleados antes de cotizar, prometer, contestar a un cliente o decidir si llaman al dueño. Las reglas de cómo trabajar con el dueño viven en `conocimiento/dueno/como-trabajar-con-el.md`.
+Para qué sirve: las reglas que el negocio cumple o no cumple, sin lugar a dudas (sección 15 del DNA). Las usan el agente y sus skills antes de cotizar, prometer, contestar a un cliente o decidir si llaman al dueño. Las reglas de cómo trabajar con el dueño viven en `conocimiento/dueno/como-trabajar-con-el.md`.
 
 Forma de cada regla: `- <enunciado que se cumple o no se cumple> · aplica cuando: <la situación> · excepción: <quién la autoriza y cuándo, o «ninguna»> · <marca> · desde: AAAA-MM-DD`
 

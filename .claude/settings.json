@@ -25,7 +25,10 @@
       "PowerShell(Get-ChildItem *)",
       "Bash(find *)",
       "WebSearch",
-      "WebFetch"
+      "WebFetch",
+      "Write(**/_privado/**)",
+      "Write(**/_Privado/**)",
+      "Write(**/_PRIVADO/**)"
     ],
     "deny": [
       "Bash(find * -delete*)",
@@ -119,7 +122,10 @@
       "Edit(/sistema/rutinas/**)",
       "Edit(/.claude/**)",
       "Edit(/.agents/**)",
-      "Edit(/.codex/**)"
+      "Edit(/.codex/**)",
+      "Read(**/_privado/**)",
+      "Read(**/_Privado/**)",
+      "Read(**/_PRIVADO/**)"
     ]
   },
   "hooks": {
@@ -128,7 +134,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "sh \"$CLAUDE_PROJECT_DIR/sistema/alarmas/sincronizar.sh\" bajar",
+            "command": "cd \"${CLAUDE_PROJECT_DIR:-.}\"; sh sistema/alarmas/sincronizar.sh bajar",
             "timeout": 60
           }
         ]
@@ -139,17 +145,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo \"Recordatorio del cerebro: al dueno escribele como el escribe, con sus palabras, su largo y ejemplos sencillos de la vida diaria, sin terminos tecnicos (conocimiento/dueno/como-hablarle.md). Esa nota la afina sola una alarma con cada tanda de mensajes suyos: no la apuntes tu en cada mensaje; solo si el la corrige con palabras, y entonces con marca [confirmado]. Imita tambien como piensa y explica (seccion Como piensa y explica). A subagentes, normal y tecnico.\"",
+            "command": "cd \"${CLAUDE_PROJECT_DIR:-.}\"; sh sistema/alarmas/al-recibir.sh",
             "timeout": 10
           },
           {
             "type": "command",
-            "command": "sh \"$CLAUDE_PROJECT_DIR/sistema/alarmas/al-recibir.sh\"",
-            "timeout": 10
-          },
-          {
-            "type": "command",
-            "command": "sh \"$CLAUDE_PROJECT_DIR/sistema/alarmas/sincronizar.sh\" bajar",
+            "command": "cd \"${CLAUDE_PROJECT_DIR:-.}\"; sh sistema/alarmas/sincronizar.sh bajar",
             "timeout": 25
           }
         ]
@@ -161,7 +162,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "sh \"$CLAUDE_PROJECT_DIR/sistema/alarmas/antes-de-escribir.sh\"",
+            "command": "cd \"${CLAUDE_PROJECT_DIR:-.}\"; sh sistema/alarmas/antes-de-escribir.sh",
             "timeout": 15
           }
         ]
@@ -171,7 +172,17 @@
         "hooks": [
           {
             "type": "command",
-            "command": "sh \"$CLAUDE_PROJECT_DIR/sistema/alarmas/antes-de-la-consola.sh\"",
+            "command": "cd \"${CLAUDE_PROJECT_DIR:-.}\"; sh sistema/alarmas/antes-de-la-consola.sh",
+            "timeout": 15
+          }
+        ]
+      },
+      {
+        "matcher": "Read|Grep|Glob|Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"${CLAUDE_PROJECT_DIR:-.}\"; sh sistema/alarmas/antes-de-leer.sh",
             "timeout": 15
           }
         ]
@@ -183,7 +194,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "sh \"$CLAUDE_PROJECT_DIR/sistema/alarmas/sincronizar.sh\" subir",
+            "command": "cd \"${CLAUDE_PROJECT_DIR:-.}\"; sh sistema/alarmas/sincronizar.sh subir",
             "timeout": 60
           }
         ]
@@ -194,12 +205,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "sh \"$CLAUDE_PROJECT_DIR/sistema/alarmas/al-terminar.sh\"",
+            "command": "cd \"${CLAUDE_PROJECT_DIR:-.}\"; sh sistema/alarmas/al-terminar.sh",
             "timeout": 15
           },
           {
             "type": "command",
-            "command": "sh \"$CLAUDE_PROJECT_DIR/sistema/alarmas/sincronizar.sh\" subir ya",
+            "command": "cd \"${CLAUDE_PROJECT_DIR:-.}\"; sh sistema/alarmas/sincronizar.sh subir ya",
             "timeout": 90
           }
         ]

@@ -1,6 +1,6 @@
 # La voz que se aprende sola
 
-Para qué sirve: hace que el asistente le hable al dueño como el dueño habla y piensa, y que esa forma se afine sola mientras más platican, sin que nadie se acuerde de apuntarla. Corre en Claude Code; en Codex vale la regla escrita de AGENTS.md, punto 2.
+Para qué sirve: hace que el asistente le hable al dueño como el dueño habla y piensa, y que esa forma se afine sola mientras más platican, sin que nadie se acuerde de apuntarla. Corre en Claude Code, Codex y Copilot (si Codex no confía en la carpeta o no se aprobaron sus alarmas con `/hooks`, vale la regla escrita de AGENTS.md, punto 2; en Copilot la voz llega en el siguiente `sessionStart` o `postToolUse`, porque Copilot descarta lo que imprime al recibir el mensaje).
 
 ## Cómo funciona
 

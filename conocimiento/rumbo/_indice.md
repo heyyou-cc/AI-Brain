@@ -7,7 +7,7 @@ Forma: `- [nombre](nombre.md) · para qué sirve · P12, P13 · actualizada AAAA
 ## Notas
 
 - [proyectos](proyectos.md) · lo que construye o intenta ahora: recursos, fechas, bloqueos · P07 · plantilla
-- [problemas](problemas.md) · los problemas urgentes: desde cuándo, cuánto cuestan, por qué siguen · P12 · plantilla
+- [problemas](problemas.md) · los problemas urgentes del negocio: desde cuándo, cuánto cuestan, por qué siguen · P12 · plantilla
 - [prioridades-90-dias](prioridades-90-dias.md) · lo más importante en 90 días y cómo sabrá que salió bien · P13 · plantilla
 - [patrones](patrones.md) · lo que se repite en ventas, clientes, equipo u operación; días de la semana, temporadas y ciclos, aunque traigan cifras o nombren un producto · P14 · plantilla
 - [predicciones](predicciones.md) · lo que cree que pasará en su ramo en 12 meses: oportunidad, amenaza, cambio · P15 · plantilla

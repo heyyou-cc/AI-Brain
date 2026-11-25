@@ -7,7 +7,8 @@
 # deja la nota como estaba, devuelve los mensajes a la fila y lo apunta en sistema/estilo/destilado.log.
 # Corre con sh en Mac, Linux y Windows con Git Bash.
 
-dir="${CLAUDE_PROJECT_DIR:-$(cd "$(dirname "$0")/../.." && pwd)}"
+dir="$CLAUDE_PROJECT_DIR"
+[ -d "$dir/sistema" ] || dir=$(cd "$(dirname "$0")/../.." && pwd)
 estilo="$dir/sistema/estilo"
 nota="$dir/conocimiento/dueno/como-hablarle.md"
 log="$estilo/destilado.log"
@@ -31,10 +32,10 @@ devuelve() { # algo salio mal: los mensajes regresan a la fila para la siguiente
   apunta "$1"
   [ -f "$estilo/muestras.jsonl" ] && cat "$estilo/muestras.jsonl" >> "$estilo/en-proceso.jsonl"
   mv "$estilo/en-proceso.jsonl" "$estilo/muestras.jsonl"
-  exit 1
+  exit "${2:-1}"
 }
 
-command -v claude > /dev/null 2>&1 || devuelve "no encontre la app de Claude en esta compu (comando claude)"
+{ [ -z "$CEREBRO_SIN_CLAUDE" ] && command -v claude > /dev/null 2>&1; } || devuelve "no encontre la app de Claude en esta compu (comando claude): la voz no se afina aqui, pero nada se rompe" 0
 
 tmp=$(mktemp -d 2>/dev/null || echo "$estilo/.tmp-$$")
 mkdir -p "$tmp"

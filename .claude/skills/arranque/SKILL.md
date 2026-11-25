@@ -1,6 +1,6 @@
 ---
 name: arranque
-description: Conoce al dueño y a su negocio la primera vez, sin pedir permiso: su primer mensaje avisa qué va a revisar y en ese mismo turno empieza. Revisa en tres vueltas (compu y conversaciones, conectores, internet), enseña el tablero de las 30 P al cerrar cada vuelta, pregunta solo lo que falta y cierra siempre con el DNA del negocio, aunque el dueño se vaya antes. Si una sesión encuentra el arranque sin cerrar, lo termina. Úsala cuando escriba /arranque (o $arranque en Codex) o «conóceme», o en el primer mensaje si el cerebro está vacío.
+description: "Conoce al dueño y a su negocio la primera vez, sin pedir permiso: su primer mensaje avisa qué va a revisar y en ese mismo turno empieza. Revisa en tres vueltas (compu y conversaciones, conectores, internet), enseña el tablero de las 31 P al cerrar cada vuelta, pregunta solo lo que falta y cierra siempre con una pregunta de privacidad (antes de conectar el respaldo y armar el DNA), el DNA del negocio y un resumen visual de las 31 P, aunque el dueño se vaya antes. Si una sesión encuentra el arranque sin cerrar, lo termina. Úsala cuando escriba /arranque (o $arranque en Codex) o «conóceme», o en el primer mensaje si el cerebro está vacío."
 ---
 
 # arranque

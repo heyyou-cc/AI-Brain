@@ -4,7 +4,7 @@ Para qué sirve: hacer con IA anuncios, videos, fotos de producto, kits de marca
 
 ## Cuándo se usa
 
-El dueño pide un anuncio, un video de su producto, fotos de producto, un kit de marca, una miniatura para sus videos o una cara de marca que se repita en sus anuncios. También cuando el agente la sugiere (ver `sistema/catalogo/skills-recomendadas.md`) y él dice que sí.
+El dueño pide un anuncio, un video de su producto, fotos de producto, un kit de marca, una miniatura para sus videos o una cara de marca que se repita en sus anuncios. También cuando el agente la sugiere (ver `skills/_recomendadas.md`) y él dice que sí.
 
 ## Antes de nada: qué hay en esta sesión
 

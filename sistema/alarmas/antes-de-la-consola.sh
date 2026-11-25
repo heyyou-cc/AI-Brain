@@ -1,12 +1,13 @@
 #!/bin/sh
-# Alarma antes de la consola (Claude Code, PreToolUse de Bash y PowerShell).
+# Alarma antes de la consola (PreToolUse de Bash y PowerShell en Claude Code; Bash en Codex; bash y powershell en Copilot).
 # Frena los comandos que sacarían a la vista una clave de 1Password o la llave de servicio:
 # usar 1Password directo en vez del mesero, leer la caja de la llave, abrir los llaveros del sistema
 # o volcar todas las variables del sistema.
 # Cuida de descuidos, no de mala fe: un comando armado a propósito para esquivarla puede pasar.
 # Corre con sh en Mac, Linux y Windows con Git Bash. Sale con 2 (frena) y explica por qué; con 0 deja pasar.
 
-entrada=$(cat)
+. "$(dirname "$0")/_leer-evento.sh"
+ev_leer
 
 frena() {
   echo "Alarma del cerebro: $1 Las claves de 1Password solo se mueven con el mesero (sistema/accesos/mesero) y solo las escribe el dueño en la ventanita (sistema/accesos/ventanita); el asistente nunca ve un valor (AGENTS.md, punto 5)." >&2
@@ -14,14 +15,7 @@ frena() {
 }
 
 # El comando que va a correr, en minúsculas y con las diagonales de Windows volteadas.
-cmd=$(printf '%s' "$entrada" | awk '{
-  s = $0
-  if (match(s, /"command"[ \t]*:[ \t]*"/)) {
-    s = substr(s, RSTART + RLENGTH); i = 1; n = length(s)
-    while (i <= n) { c = substr(s, i, 1); if (c == "\\") { i += 2; continue }; if (c == "\"") break; i++ }
-    print substr(s, 1, i - 1)
-  }
-}' | tr 'ABCDEFGHIJKLMNOPQRSTUVWXYZ\\' 'abcdefghijklmnopqrstuvwxyz/' | sed 's#//*#/#g')
+cmd=$(printf '%s' "$EV_COMANDO" | tr 'ABCDEFGHIJKLMNOPQRSTUVWXYZ\\' 'abcdefghijklmnopqrstuvwxyz/' | sed 's#//*#/#g')
 [ -z "$cmd" ] && exit 0
 
 # Quita las llamadas al mesero y a la ventanita: esas sí pueden usar 1Password por dentro.

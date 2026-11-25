@@ -1,6 +1,6 @@
 # Cómo hablarle al dueño
 
-Para qué sirve: dice cómo escribirle a él (no a sus clientes): trato, largo, palabras y lo que no le gusta. Solo lo que le escribes a él: si corrige un texto que va para otros (un borrador, una cotización, una publicación de un empleado), eso va a «Aprendizajes» de la ficha de ese empleado, no aquí. El agente lo lee al primer mensaje de cada sesión (AGENTS.md, punto 1).
+Para qué sirve: dice cómo escribirle a él (no a sus clientes): trato, largo, palabras y lo que no le gusta. Solo lo que le escribes a él: si corrige un texto que va para otros (un borrador, una cotización, una publicación hecha con una skill), eso va a `skills/_aprendizajes.md`, no aquí. El agente lo lee al primer mensaje de cada sesión (AGENTS.md, punto 1).
 
 Mientras una parte siga en «pendiente», vale lo de AGENTS.md, punto 2: el trato con que él escribe (de tú si escribe de tú; de usted solo si él lo usa o lo pide), corto, en palabras llanas, la conclusión primero. Cómo trata él a sus clientes es la voz de su marca y vive en `conocimiento/negocio/`: no se copia aquí.
 

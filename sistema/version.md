@@ -2,29 +2,46 @@
 
 Para qué sirve: dice qué versión es esta carpeta y qué archivos son nuestros (heyyou los puede reemplazar en una versión nueva) y cuáles son del dueño (nunca se pisan). Quien ponga una versión nueva encima reemplaza solo lo nuestro.
 
-- Versión: 1.10.0
-- Fecha: 2026-11-23
-- Probada en: la 1.8, en Claude Code; la 1.9 a la 1.10 falta correrlas enteras. La herramienta de leer documentos se corrió en Windows (PowerShell 5.1 y Git Bash) con documentos de ejemplo, y las dos versiones dan la misma salida; en un Mac no se ha corrido. El extractor de exportaciones de claude.ai y ChatGPT (`-Exportacion`) se probó en PowerShell 5.1 con archivos de muestra, `.zip` y `.json`; la versión `.sh` se probó solo en su lógica, con Node en vez de `osascript`, y no se ha corrido en un Mac. Codex queda configurado según su documentación, sin correrlo.
+- Versión: 1.11.0
+- Fecha: 2026-11-24
+- Probada en: la 1.8, en Claude Code; la 1.9 a la 1.11 falta correrlas enteras. La herramienta de leer documentos se corrió en Windows (PowerShell 5.1 y Git Bash) con documentos de ejemplo, y las dos versiones dan la misma salida; en un Mac no se ha corrido. El extractor de exportaciones de claude.ai y ChatGPT (`-Exportacion`) se probó en PowerShell 5.1 con archivos de muestra, `.zip` y `.json`; la versión `.sh` se probó solo en su lógica, con Node en vez de `osascript`, y no se ha corrido en un Mac. Las alarmas, los tres formatos de evento (Claude, Codex y Copilot), la carpeta `_privado` y el lanzador de Windows se probaron en Windows con Git Bash y PowerShell 5.1: `probar.sh` 143 de 143 y `probar-sincronizar.sh` 104 de 104. El motor de agentes (`sistema/mcp/`), `.codex/hooks.json`, `.github/hooks/` y los demás archivos nuevos de plomería quedan configurados según su documentación. Sin probar: Mac, Codex y Copilot reales.
 
 ## Nuestros: se pueden reemplazar en una versión nueva
 
 - `AGENTS.md`, `CLAUDE.md` y `LEEME.md`.
-- `.claude/settings.json`, `.codex/config.toml` y `.gitattributes`.
-- Las ocho rutinas de fábrica en `sistema/rutinas/`: `arranque.md`, `dna-del-negocio.md`, `repaso-semanal.md`, `nuevo-entregable.md`, `proponer-automatizacion.md`, `crear-empleado.md`, `corregir-chamba.md` y `higgsfield.md`.
-- Sus puertas: `.claude/skills/<rutina>/SKILL.md` y `.agents/skills/<rutina>/SKILL.md` de esas ocho.
-- Todo `sistema/catalogo/` (`_leeme.md`, `repos-de-referencia.md` y `skills-recomendadas.md`): listas de consulta que heyyou pone al día.
+- `.claude/settings.json`, `.codex/config.toml`, `.codex/hooks.json`, `.gitattributes` y las reglas de fábrica de `.gitignore` (las líneas que el dueño agregue se conservan).
+- `.github/hooks/` (las alarmas de Copilot), `.mcp.json` y `.vscode/mcp.json` (el motor de agentes), `.ignore` (saca `_privado` de las búsquedas) y todo `sistema/mcp/` (el motor de agentes de heyyou).
+- Las ocho rutinas de fábrica en `sistema/rutinas/`: `arranque.md`, `dna-del-negocio.md`, `repaso-semanal.md`, `nuevo-entregable.md`, `proponer-automatizacion.md`, `crear-skill.md`, `corregir-chamba.md` y `higgsfield.md`.
+- Sus puertas: `.claude/skills/<nombre>/SKILL.md` y `.agents/skills/<nombre>/SKILL.md` de esas ocho y de las catorce skills de fábrica.
+- En `skills/`: las catorce skills de fábrica (`cotizar`, `responder-clientes`, `cobrar`, `contenido-para-redes`, `propuesta-comercial`, `prospectar`, `dar-seguimiento`, `investigar-competencia`, `revisar-numeros`, `minuta-de-junta`, `documentar-un-proceso`, `plan-de-la-semana`, `contratar` y `aprender-ia`), `skills/_recomendadas.md` (menos su sección «No las quiere») y las reglas y la tabla de fábrica de `skills/_indice.md` (los estados, las ideas y las skills del dueño de ese archivo son del dueño). Una skill de fábrica no se corrige a mano: lo que el dueño le corrige vive en `skills/_aprendizajes.md`.
+- `repositorios/_indice.md` (menos su sección «No los quiere»): el inventario de proyectos de consulta que heyyou pone al día.
 - `sistema/clasificacion.md`, todo `sistema/herramientas/`, todo `sistema/alarmas/` (menos `.ultima-orden`), todo `sistema/accesos/` (menos `.caja` y `.caja-linux`, que son del dueño), `sistema/tareas/probar-alarmas.md` y `sistema/tareas/conectar-caja-fuerte.md` y `sistema/tareas/conectar-respaldo.md` si siguen en la carpeta, y este archivo.
-- En `empleados/`, las fichas del catálogo de ejemplos que siguen en estado «dormido», y las primeras líneas de `empleados/_indice.md` (para qué sirve cada sección). Una versión nueva puede agregar fichas al catálogo y sus renglones, pero no toca los estados, los puestos creados para el negocio ni sus ideas de puestos.
 - Los `_leeme.md` de `entrada/` y `entrada/por-clasificar/`, y las primeras líneas (para qué sirve y forma) de las libretas de `sistema/`, sin tocar lo que el dueño ya tiene debajo.
 
 ## Del dueño: nunca se pisan
 
-- Todo `conocimiento/`, también las 30 notas de las 30 P y `conocimiento/_30p.md` (el tablero), aunque una nota siga siendo plantilla (si una versión nueva trae otra forma, se propone, no se pisa; si trae una nota que falta, como la lista de correcciones, se agrega vacía).
+- Todo `conocimiento/`, también las 31 notas de las 31 P y `conocimiento/_30p.md` (el tablero), aunque una nota siga siendo plantilla (si una versión nueva trae otra forma, se propone, no se pisa; si trae una nota que falta, como la lista de correcciones o la de la P31, se agrega vacía).
+- **`_privado/`, entera.** Es del dueño: nunca se pisa, nunca se sube a GitHub y ningún asistente la abre sin su permiso. Esto vale también para cualquier carpeta que se llame `_privado`, a cualquier nivel.
 - Todo `trabajo/`, `fuentes/` y `entrada/` (fuera de sus `_leeme.md`).
+- `skills/_aprendizajes.md` (lo que el dueño corrigió a cada skill), `skills/_viejos/` (las fichas de puestos que se convirtieron), las skills que el dueño creó o convirtió y los estados y las ideas de `skills/_indice.md`.
 - `sistema/exclusiones.md` (lo que el dueño pidió que no se vea ni se guarde) y `sistema/sincronizar.conf` (la dirección de su repositorio propio).
 - `sistema/estado.md`, `sistema/registro-del-barrido.md`, `sistema/golpes.md`, `sistema/decisiones.md`, `sistema/ideas-para-automatizar.md` y `sistema/bitacora.md`, en lo que está debajo de sus primeras líneas.
-- Las fichas de `empleados/` que ya se despertaron o que se crearon para el negocio, sus renglones y los estados de `empleados/_indice.md`.
-- Las rutinas que el dueño aceptó después y sus puertas (lista de abajo), y `.claude/settings.local.json` si existe.
+- Las rutinas y las skills que el dueño aceptó o creó después y sus puertas (listas de abajo), y `.claude/settings.local.json` si existe.
+- **Si el cerebro trae la carpeta de puestos de una versión anterior (`empleados/`):** no se borra ni se pisa. Los puestos despiertos o creados para el negocio se conservan hasta que el asistente, en la primera sesión con la 1.11, proponga convertir cada uno en skill; la ficha vieja se mueve a `skills/_viejos/` solo con el «sí» del dueño (`sistema/rutinas/crear-skill.md`, «Migración»).
+
+## Desde 1.10
+
+Cuando alguien abre con la 1.11 una carpeta que ya existía (la `version` de `sistema/estado.md` dice 1.10 o menos, tiene `empleados/` o `conocimiento/_30p.md` no trae la P31), el asistente corre esto una sola vez, en la primera sesión, sin preguntar lo que es de plantilla y sin tocar un solo dato del dueño. Al terminar escribe `migracion_1_11: <fecha de hoy>` y `version: 1.11` en el estado, y una línea en `sistema/bitacora.md`.
+
+1. **Las 31 P, solo la forma.**
+   - Agrega la fila de la P31 al final de `conocimiento/_30p.md` y de `conocimiento/_mapa.md`, con la forma de las otras (`| P31 | Problemas del dueño | [problemas](dueno/problemas.md) | vacía | — |`; en el mapa, `| P31 | Problemas del dueño | [`dueno/problemas.md`](dueno/problemas.md) | vacía |`). Si la nota de la P31 ya trae datos, cuenta su llenado con la escala del mapa en vez de poner «vacía».
+   - Cambia el nombre de la P12 a «Problemas del negocio» y el de la P20 a «Pericias (skills)», con enlace a `skills/_indice.md` (en el tablero `[skills](../skills/_indice.md)`; en el mapa `[`skills/_indice.md`](../skills/_indice.md), sección «Ideas de skills»`). No cambies «Qué tan lleno» ni «Lo más importante» de ninguna fila, y no reescribas lo que el dueño ya llenó.
+   - Cambia «30» por «31» solo en las líneas de fábrica que cuentan las P (por ejemplo, «Las 31 P están repartidas…» del mapa).
+   - Crea `conocimiento/dueno/problemas.md` si falta, con la forma de la nota de fábrica de la P31 (la primera línea dice para qué sirve, luego `P: P31 · Problemas del dueño`, «Lo que sabemos», «Lo que falta saber» y «Historia»), y su línea en `conocimiento/dueno/_indice.md`.
+2. **Borra lo viejo de fábrica**, solo si sigue como lo entregó heyyou (si el dueño lo cambió o aparece en «Rutinas del dueño», no lo borres: díselo en una línea): `sistema/rutinas/crear-empleado.md`, las puertas `crear-empleado` de `.claude/skills/` y de `.agents/skills/`, y la carpeta `sistema/catalogo/` (su contenido útil ya vive en `skills/_recomendadas.md` y `repositorios/_indice.md`; comprueba que existan antes). No toques `empleados/` en este paso.
+3. **Puestos de la carpeta `empleados/`.** Si hay puestos despiertos o creados para el negocio, propón **una sola vez** convertirlos en skills, como dice «Migración» en `sistema/rutinas/crear-skill.md`. Si el dueño dice que no, apunta `migracion_empleados: no` en el estado y no lo propongas otra vez; si dice que sí, `migracion_empleados: hecha` al terminar.
+4. **La pregunta de privacidad.** Si el arranque ya estaba `listo`, haz una vez la pregunta de privacidad del cierre (`sistema/rutinas/arranque.md`, paso 3 de `cierre`), con su aviso de costo, y escribe `pregunta_privado`. Mientras no conteste, la sincronización queda en pausa (`sistema/alarmas/sincronizar.sh`): la plantilla trae esa regla y vale también aquí.
+5. **Las reglas de privacidad del `.gitignore`.** Comprueba que traiga `**/_[Pp][Rr][Ii][Vv][Aa][Dd][Oo]/*` y su excepción `!**/_[Pp][Rr][Ii][Vv][Aa][Dd][Oo]/_leeme.md`; si falta, agrégalas. Lo que una versión vieja ya haya subido queda en el historial del respaldo; la sincronización solo evita que siga subiendo, y heyyou puede limpiarlo del historial si el dueño lo pide.
 
 ## Rutinas del dueño
 
@@ -32,7 +49,23 @@ Las que nacen con `sistema/rutinas/proponer-automatizacion.md` se apuntan aquí,
 
 Ninguna todavía.
 
+## Skills del dueño
+
+Las que nacen con `sistema/rutinas/crear-skill.md` (o se convierten de un puesto de una versión anterior) se apuntan aquí, una por renglón, para que una versión nueva no las pise: `- <nombre> · skills/<nombre>/SKILL.md · desde AAAA-MM-DD`.
+
+Ninguna todavía.
+
 ## Historia de versiones
+
+- 1.11.0 · 2026-11-24 · Retos del dueño, carpeta privada, skills en lugar de puestos e inventario a la vista, uno por renglón:
+  - Nace la P31, «Problemas del dueño»: los retos del dueño (o del alumno) como persona que dirige o aprende, como el tiempo, delegar, la IA, sentirse rebasado o vender. Nota nueva `conocimiento/dueno/problemas.md`. El arranque la busca en sus conversaciones con la IA, su correo y lo que dice, y la pregunta en la entrevista si sigue vacía. La P12 pasa a llamarse «Problemas del negocio». Son 31 P: tablero, mapa, ficha de clasificación, DNA y avisos al día.
+  - Carpeta privada: `_privado/` en la raíz del cerebro, y cualquier carpeta con ese nombre a cualquier nivel. Ahí va lo sensible del dueño con la misma ruta que en `conocimiento/`. Nunca se sube a GitHub y ningún asistente la abre sin su «sí» en el chat, cada vez y en cada sesión; buscar no entra. Si un dato de una P se fue ahí, su fila dice «hay datos en privado», sin repetirlo. La regla vale sin distinguir mayúsculas (`_Privado`, `_PRIVADO`). Lo que se mueva con `git mv` o ya estuviera seguido por git se deja de seguir sin borrarlo del disco. Las alarmas preguntan también ante comandos que recorren todo el cerebro (`grep -r`, `rg --no-ignore`, `tar`, `zip`…) y ante `<` o verbos como `cut`, `wc`, `sort`, `jq`. Su explicación está en `AGENTS.md`, en `LEEME.md` y en el `_leeme.md` de la propia carpeta; ese archivo también pide permiso en Claude Code (su regla `ask` no se puede excepcionar), por eso lo explicado está en los otros dos. Si una nota dice «(hay datos en privado)», lo nuevo de ese tipo va a su gemela privada y usarlo pide permiso.
+  - El cierre del arranque cambia de orden y trae una pregunta y un resumen: primero la pregunta de privacidad («¿la mando a una carpeta privada?», con sí, no o una por una, y el aviso de que usar esos datos después pedirá permiso), luego, si dijo que sí, se mueve lo sensible, luego el respaldo en línea, luego el DNA (que nunca incluye lo privado) y al final el mensaje con un resumen visual de las 31 P (tabla agrupada por carpeta, con barra de qué tan llena está cada una, lo más importante y dónde quedó, y una línea de conteo). Si el dueño no contesta, `pregunta_privado` queda `pendiente`, no se conecta el respaldo, la sincronización se pone en pausa (no guarda ni sube nada) y se repite al empezar la sesión siguiente. Campos nuevos del estado: `pregunta_privado`, `datos_en_privado`, `migracion_1_11` y `migracion_empleados`.
+  - Se quitan `empleados/` y la rutina `crear-empleado`. En su lugar, `skills/` con catorce skills de fábrica y la rutina `crear-skill` para armar las que pida el negocio, cada una con sus dos puertas (Claude Code, Codex y Copilot las encuentran). La P20 pasa de «Puestos artificiales» a «Pericias (skills)». Lo que el dueño corrige a una skill vive en `skills/_aprendizajes.md`.
+  - Migración: un cerebro viejo con puestos despiertos o creados no los pierde. En la primera sesión con la 1.11 el asistente propone convertir cada uno en skill y mueve la ficha vieja a `skills/_viejos/` solo con el «sí» del dueño.
+  - El inventario de repositorios sube a la vista: `repositorios/_indice.md`, agrupado por para qué sirve (atender por WhatsApp y voz, automatizar, CRM, contenido y video, web y scraping, agentes con el teléfono o el navegador, memoria y juntas, facturas y contabilidad, conectores MCP, cómo trabajar con agentes y aprender IA), con enlace, para qué le sirve al dueño y qué tan difícil es de instalar. Las habilidades de terceros pasan a `skills/_recomendadas.md`. `sistema/catalogo/` desaparece. El asistente solo sugiere; instalar sigue pidiendo el «sí» del dueño.
+  - Plomería: las alarmas corren en Claude Code, Codex y Copilot, en Windows y Mac. Un lector común (`_leer-evento.sh`) entiende los tres formatos de evento; no dependen de `CLAUDE_PROJECT_DIR`. Nuevos: `.codex/hooks.json`, `.github/hooks/cerebro.json`, `sistema/alarmas/correr.ps1` (lanzador de Windows) y `antes-de-leer.sh`. Carpeta `_privado` a cualquier nivel: no se sube (`.gitignore`), no se busca (`.ignore`) y leerla pide permiso (`ask` en Claude y Copilot; en Codex frena y pide permiso en el chat). Motor de agentes de heyyou como MCP local en `sistema/mcp/motor-de-agentes/` (`.mcp.json`, `.vscode/mcp.json`, `.codex/config.toml`; llave en `HEYYOU_HUB_KEY`; por ahora contra el Hub de desarrollo). Codex deja los hooks apagados hasta que el dueño los aprueba con `/hooks` (y los apaga otra vez cuando cambian): el asistente se lo pide si la marca `.ultima-orden` no se actualiza. Copilot descarta lo que imprime `userPromptSubmitted`: sus avisos y el recordatorio de la voz llegan en el siguiente `sessionStart` o `postToolUse` (`additionalContext`) y los choques de sincronización frenan en `agentStop`; si Copilot contesta sin usar herramientas, la voz espera. Pruebas en Windows: `probar.sh` 143 de 143, `probar-sincronizar.sh` 104 de 104. Sin probar: Mac, Codex y Copilot reales.
+  - La 1.11 no se ha corrido de punta a punta ni en Claude Code ni en Codex.
 
 - 1.10.0 · 2026-11-23 · El arranque trabaja solo y se sincroniza solo, uno por renglón:
   - El arranque ya no pide permiso: saluda, dice qué va a hacer y empieza en ese mismo turno. `permiso` pasa a `directo` (los valores viejos siguen valiendo). Lo personal y los archivos de claves siguen sin abrirse.
